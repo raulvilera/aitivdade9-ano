@@ -97,13 +97,14 @@
         }
         
         .question {
-            margin-bottom: 30px;
+            margin-bottom: 113px; /* Aproximadamente 3cm */
             padding-bottom: 20px;
-            border-bottom: 1px solid #dee2e6;
+            border-bottom: 2px solid #b0bec5; /* Borda mais visível */
         }
         
         .question:last-child {
             border-bottom: none;
+            margin-bottom: 0;
         }
         
         .question-header {
@@ -140,6 +141,9 @@
             padding: 10px;
             border-radius: 6px;
             transition: background-color 0.2s;
+            cursor: pointer; /* Indica que é clicável */
+            display: flex;
+            align-items: flex-start;
         }
         
         .option:hover {
@@ -148,6 +152,11 @@
         
         .option input {
             margin-right: 10px;
+            margin-top: 2px; /* Alinhamento vertical */
+        }
+        
+        .option-text {
+            flex: 1; /* Ocupa todo o espaço disponível */
         }
         
         .discursive {
@@ -257,10 +266,22 @@
                     </div>
                 </div>
                 <div class="options">
-                    <div class="option"><input type="radio" name="q1" value="a"> a) Ambos percorreram a mesma distância (5 km), mas João teve um deslocamento de 5 km (da casa ao parque), enquanto Maria teve deslocamento zero, pois começou e terminou no mesmo lugar.</div>
-                    <div class="option"><input type="radio" name="q1" value="b"> b) Ambos tiveram o mesmo deslocamento (5 km), mas Maria percorreu uma distância maior porque a esteira exige mais esforço físico.</div>
-                    <div class="option"><input type="radio" name="q1" value="c"> c) João percorreu maior distância porque enfrentou obstáculos na rua, mas ambos tiveram o mesmo deslocamento.</div>
-                    <div class="option"><input type="radio" name="q1" value="d"> d) Maria percorreu maior distância porque a esteira conta apenas o movimento efetivo, mas ambos tiveram deslocamento zero por fazerem exercício no mesmo local.</div>
+                    <label class="option">
+                        <input type="radio" name="q1" value="a">
+                        <span class="option-text">a) Ambos percorreram a mesma distância (5 km), mas João teve um deslocamento de 5 km (da casa ao parque), enquanto Maria teve deslocamento zero, pois começou e terminou no mesmo lugar.</span>
+                    </label>
+                    <label class="option">
+                        <input type="radio" name="q1" value="b">
+                        <span class="option-text">b) Ambos tiveram o mesmo deslocamento (5 km), mas Maria percorreu uma distância maior porque a esteira exige mais esforço físico.</span>
+                    </label>
+                    <label class="option">
+                        <input type="radio" name="q1" value="c">
+                        <span class="option-text">c) João percorreu maior distância porque enfrentou obstáculos na rua, mas ambos tiveram o mesmo deslocamento.</span>
+                    </label>
+                    <label class="option">
+                        <input type="radio" name="q1" value="d">
+                        <span class="option-text">d) Maria percorreu maior distância porque a esteira conta apenas o movimento efetivo, mas ambos tiveram deslocamento zero por fazerem exercício no mesmo local.</span>
+                    </label>
                 </div>
             </div>
             
@@ -273,10 +294,22 @@
                     </div>
                 </div>
                 <div class="options">
-                    <div class="option"><input type="radio" name="q2" value="a"> a) Distância percorrida: 14 metros (10 m na ida + 4 m na volta) | Deslocamento: 6 metros (diferença entre posição final B e inicial A)</div>
-                    <div class="option"><input type="radio" name="q2" value="b"> b) Distância percorrida: 10 metros (apenas a ida) | Deslocamento: 4 metros (diferença entre posição final B e ponto C)</div>
-                    <div class="option"><input type="radio" name="q2" value="c"> c) Distância percorrida: 16 metros (10 m na ida + 6 m na volta) | Deslocamento: 0 metros (porque voltou parte do caminho)</div>
-                    <div class="option"><input type="radio" name="q2" value="d"> d) Distância percorrida: 14 metros (10 m na ida + 4 m na volta) | Deslocamento: 4 metros (diferença entre posição final B e inicial A)</div>
+                    <label class="option">
+                        <input type="radio" name="q2" value="a">
+                        <span class="option-text">a) Distância percorrida: 14 metros (10 m na ida + 4 m na volta) | Deslocamento: 6 metros (diferença entre posição final B e inicial A)</span>
+                    </label>
+                    <label class="option">
+                        <input type="radio" name="q2" value="b">
+                        <span class="option-text">b) Distância percorrida: 10 metros (apenas a ida) | Deslocamento: 4 metros (diferença entre posição final B e ponto C)</span>
+                    </label>
+                    <label class="option">
+                        <input type="radio" name="q2" value="c">
+                        <span class="option-text">c) Distância percorrida: 16 metros (10 m na ida + 6 m na volta) | Deslocamento: 0 metros (porque voltou parte do caminho)</span>
+                    </label>
+                    <label class="option">
+                        <input type="radio" name="q2" value="d">
+                        <span class="option-text">d) Distância percorrida: 14 metros (10 m na ida + 4 m na volta) | Deslocamento: 4 metros (diferença entre posição final B e inicial A)</span>
+                    </label>
                 </div>
             </div>
             
@@ -289,10 +322,22 @@
                     </div>
                 </div>
                 <div class="options">
-                    <div class="option"><input type="radio" name="q3" value="a"> a) 5 m/s, pois 150 metros divididos por 30 segundos resulta em 5 metros por segundo</div>
-                    <div class="option"><input type="radio" name="q3" value="b"> b) 50 m/s, pois a velocidade em metros por segundo é sempre maior que em km/h</div>
-                    <div class="option"><input type="radio" name="q3" value="c"> c) 0,05 m/s, pois é necessário converter segundos para minutos no cálculo</div>
-                    <div class="option"><input type="radio" name="q3" value="d"> d) 0,5 m/s, pois a velocidade média considera apenas o deslocamento final</div>
+                    <label class="option">
+                        <input type="radio" name="q3" value="a">
+                        <span class="option-text">a) 5 m/s, pois 150 metros divididos por 30 segundos resulta em 5 metros por segundo</span>
+                    </label>
+                    <label class="option">
+                        <input type="radio" name="q3" value="b">
+                        <span class="option-text">b) 50 m/s, pois a velocidade em metros por segundo é sempre maior que em km/h</span>
+                    </label>
+                    <label class="option">
+                        <input type="radio" name="q3" value="c">
+                        <span class="option-text">c) 0,05 m/s, pois é necessário converter segundos para minutos no cálculo</span>
+                    </label>
+                    <label class="option">
+                        <input type="radio" name="q3" value="d">
+                        <span class="option-text">d) 0,5 m/s, pois a velocidade média considera apenas o deslocamento final</span>
+                    </label>
                 </div>
             </div>
             
@@ -305,10 +350,22 @@
                     </div>
                 </div>
                 <div class="options">
-                    <div class="option"><input type="radio" name="q4" value="a"> a) A velocidade média é sempre maior que a velocidade instantânea, pois considera todo o trajeto</div>
-                    <div class="option"><input type="radio" name="q4" value="b"> b) A velocidade instantânea é a velocidade em um instante específico, como a mostrada no velocímetro de um carro</div>
-                    <div class="option"><input type="radio" name="q4" value="c"> c) A velocidade média não depende do referencial adotado, apenas da distância percorrida</div>
-                    <div class="option"><input type="radio" name="q4" value="d"> d) A velocidade instantânea é calculada como a média de todas as velocidades durante o percurso</div>
+                    <label class="option">
+                        <input type="radio" name="q4" value="a">
+                        <span class="option-text">a) A velocidade média é sempre maior que a velocidade instantânea, pois considera todo o trajeto</span>
+                    </label>
+                    <label class="option">
+                        <input type="radio" name="q4" value="b">
+                        <span class="option-text">b) A velocidade instantânea é a velocidade em um instante específico, como a mostrada no velocímetro de um carro</span>
+                    </label>
+                    <label class="option">
+                        <input type="radio" name="q4" value="c">
+                        <span class="option-text">c) A velocidade média não depende do referencial adotado, apenas da distância percorrida</span>
+                    </label>
+                    <label class="option">
+                        <input type="radio" name="q4" value="d">
+                        <span class="option-text">d) A velocidade instantânea é calculada como a média de todas as velocidades durante o percurso</span>
+                    </label>
                 </div>
             </div>
             
@@ -321,10 +378,22 @@
                     </div>
                 </div>
                 <div class="options">
-                    <div class="option"><input type="radio" name="q5" value="a"> a) 30 m/s, pois 9000 metros divididos por 300 segundos resulta em 30 metros por segundo</div>
-                    <div class="option"><input type="radio" name="q5" value="b"> b) 930 m/s, valor que seria obtido se considerássemos apenas os primeiros 100 metros</div>
-                    <div class="option"><input type="radio" name="q5" value="c"> c) 8700 m/s, resultado da multiplicação entre distância e tempo</div>
-                    <div class="option"><input type="radio" name="q5" value="d"> d) 0,033... m/s, valor obtido ao dividir 300 segundos por 9000 metros</div>
+                    <label class="option">
+                        <input type="radio" name="q5" value="a">
+                        <span class="option-text">a) 30 m/s, pois 9000 metros divididos por 300 segundos resulta em 30 metros por segundo</span>
+                    </label>
+                    <label class="option">
+                        <input type="radio" name="q5" value="b">
+                        <span class="option-text">b) 930 m/s, valor que seria obtido se considerássemos apenas os primeiros 100 metros</span>
+                    </label>
+                    <label class="option">
+                        <input type="radio" name="q5" value="c">
+                        <span class="option-text">c) 8700 m/s, resultado da multiplicação entre distância e tempo</span>
+                    </label>
+                    <label class="option">
+                        <input type="radio" name="q5" value="d">
+                        <span class="option-text">d) 0,033... m/s, valor obtido ao dividir 300 segundos por 9000 metros</span>
+                    </label>
                 </div>
             </div>
             
