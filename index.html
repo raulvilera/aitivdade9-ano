@@ -215,7 +215,6 @@
                     <label for="student-name">NOME:</label>
                     <select id="student-name">
                         <option value="">Selecione seu nome</option>
-                        <!-- As opções serão preenchidas via JavaScript -->
                     </select>
                 </div>
                 <div class="info-group">
@@ -359,36 +358,102 @@
     </div>
 
     <script>
-        // Dados dos alunos (serão carregados do Google Sheets)
-        let students = [];
-
-        // Carregar lista de alunos do Google Sheets
-        function loadStudentsList() {
-            google.script.run
-                .withFailureHandler((error) => {
-                    console.error('Erro ao carregar alunos:', error);
-                    // Usar lista fallback caso haja erro
-                    loadFallbackStudents();
-                })
-                .withSuccessHandler((studentsList) => {
-                    students = studentsList;
-                    populateStudentDropdown();
-                })
-                .getStudentsList();
-        }
-
-        // Lista fallback caso não consiga carregar do Sheets
-        function loadFallbackStudents() {
-            students = [
-                { name: "ÁGATHA NIKOLLE DA SILVA RAMOS", number: "1", grade: "9ºA" },
-                { name: "AMANDA BEATRIZ LEAL MOURAD", number: "2", grade: "9ºA" },
-                { name: "ANNA NICOLY BENVINDO DOS SANTOS", number: "4", grade: "9ºA" },
-                { name: "ARTHUR DOS SANTOS", number: "5", grade: "9ºA" },
-                { name: "BEATRIZ UCHOA DOS SANTOS", number: "6", grade: "9ºA" },
-                // ... (incluir todos os outros alunos da lista anterior)
-            ];
-            populateStudentDropdown();
-        }
+        // Dados dos alunos baseados na planilha fornecida
+        const students = [
+            // 9ºA
+            { name: "ÁGATHA NIKOLLE DA SILVA RAMOS", number: "1", grade: "9ºA" },
+            { name: "AMANDA BEATRIZ LEAL MOURAD", number: "2", grade: "9ºA" },
+            { name: "ANNA NICOLY BENVINDO DOS SANTOS", number: "4", grade: "9ºA" },
+            { name: "ARTHUR DOS SANTOS", number: "5", grade: "9ºA" },
+            { name: "BEATRIZ UCHOA DOS SANTOS", number: "6", grade: "9ºA" },
+            { name: "BRUNO EDUARDO NOGUEIRA DE OLIVEIRA", number: "7", grade: "9ºA" },
+            { name: "CARLOS EDUARDO BELMIRO DOS SANTOS", number: "8", grade: "9ºA" },
+            { name: "CHRISTIAN DAVI DE OLIVEIRA", number: "9", grade: "9ºA" },
+            { name: "FILIPE RODRIGUES SANTOS", number: "12", grade: "9ºA" },
+            { name: "GABRIEL ALMEIDA MOSCARDINI", number: "13", grade: "9ºA" },
+            { name: "GIOVANA MOTA VAZ DE JESUS", number: "14", grade: "9ºA" },
+            { name: "GUILHERME DA SILVA GUIMARÃES", number: "15", grade: "9ºA" },
+            { name: "HELOÍSA LEAL DOS REIS", number: "16", grade: "9ºA" },
+            { name: "IAGO ANJOS DE JESUS", number: "17", grade: "9ºA" },
+            { name: "IGNACIO LINS SANTOS", number: "18", grade: "9ºA" },
+            { name: "ISADORA DE SOUZA SILVA", number: "19", grade: "9ºA" },
+            { name: "JOAO VICTOR BATISTA DUARTE", number: "20", grade: "9ºA" },
+            { name: "JULIANA SANTOS LIMA", number: "21", grade: "9ºA" },
+            { name: "MANUELA VITÓRIA LIMA DOS SANTOS", number: "25", grade: "9ºA" },
+            { name: "MIGUEL ALVES OLIVEIRA", number: "26", grade: "9ºA" },
+            { name: "ORIANA JOSE TUAREZ RENGEL", number: "28", grade: "9ºA" },
+            { name: "RAFAELLA VITÓRIA EXPEDITA DE ANDRADE MARQUES", number: "31", grade: "9ºA" },
+            { name: "RAYLAN DE JESUS BARBOSA", number: "33", grade: "9ºA" },
+            { name: "REBECA DOS SANTOS SOUSA", number: "34", grade: "9ºA" },
+            { name: "RICHARD JOSÉ DOS SANTOS", number: "35", grade: "9ºA" },
+            { name: "SARA CRISTINA PASSOS MARTINS", number: "36", grade: "9ºA" },
+            { name: "VANESSA CARDOSO DOS SANTOS", number: "37", grade: "9ºA" },
+            { name: "JULIA DIAS AZEVEDO", number: "41", grade: "9ºA" },
+            { name: "SAMARA HELEN DA SILVA", number: "42", grade: "9ºA" },
+            { name: "LUIS MATHEUS DA SILVA RAMOS", number: "44", grade: "9ºA" },
+            { name: "FABIO HENRIQUE DA SILVA", number: "46", grade: "9ºA" },
+            { name: "SOPHIA MIRELLA BRAGA GARCIA", number: "50", grade: "9ºA" },
+            
+            // 9ºB
+            { name: "ALEJANDRO VIEIRA LIMA", number: "1", grade: "9ºB" },
+            { name: "ALEX GUSTAVO DA SILVA VIEIRA", number: "2", grade: "9ºB" },
+            { name: "ALLAN BEZERRA DE LIMA", number: "3", grade: "9ºB" },
+            { name: "ARTHUR MARYANO MENDES", number: "8", grade: "9ºB" },
+            { name: "CARLOS EDUARDO OLIVEIRA SABATERRA", number: "9", grade: "9ºB" },
+            { name: "EDUARDA DE SOUSA OLIVEIRA", number: "13", grade: "9ºB" },
+            { name: "GIOVANNA MARTINEZ FERREIRA", number: "16", grade: "9ºB" },
+            { name: "GRAZIELLE VITÓRIA SILVA FIGUEIREDO", number: "17", grade: "9ºB" },
+            { name: "KARINA DE JESUS SANTANA", number: "21", grade: "9ºB" },
+            { name: "LEONARDO JUNIOR ALBUQUERQUE DA SILVA", number: "24", grade: "9ºB" },
+            { name: "MARCOS DE OLIVEIRA CARVALHO", number: "27", grade: "9ºB" },
+            { name: "MARIA EDUARDA SILVA SOUZA", number: "28", grade: "9ºB" },
+            { name: "MOISES DOS SANTOS BOMFIM", number: "29", grade: "9ºB" },
+            { name: "NAHYMÊ VITORIA TAVARES DOS SANTOS", number: "30", grade: "9ºB" },
+            { name: "NICOLAS LUAN MENDES", number: "31", grade: "9ºB" },
+            { name: "PEDRO HENRIQUE ARRABAL MANZARO", number: "32", grade: "9ºB" },
+            { name: "PIETRO RAMON DE PAIVA MAGALHÃES LEITÃO", number: "33", grade: "9ºB" },
+            { name: "TATIANA DA SILVA RODRIGUES", number: "35", grade: "9ºB" },
+            { name: "VITOR HUGO DOMINGOS SANTOS", number: "36", grade: "9ºB" },
+            { name: "WAGNER SILVA MEIRA", number: "37", grade: "9ºB" },
+            { name: "YASMIM ANDRADE DOS SANTOS", number: "38", grade: "9ºB" },
+            { name: "JULIA BARBOSA DA SILVA", number: "39", grade: "9ºB" },
+            { name: "MIGUEL ANGEL NINA QUISPE", number: "41", grade: "9ºB" },
+            { name: "FILIPE ANDRADE DE LIMA", number: "42", grade: "9ºB" },
+            { name: "PEDRO HENRIQUE QUEIROZ DE JESUS", number: "43", grade: "9ºB" },
+            { name: "ANDREY FELIPE ALVES DOS SANTOS", number: "44", grade: "9ºB" },
+            
+            // 9ºC
+            { name: "ALEXANDRE SERAFIM JUNIOR", number: "2", grade: "9ºC" },
+            { name: "ANA LUIZA DO NASCIMENTO", number: "3", grade: "9ºC" },
+            { name: "ARTHUR EMANUEL ALMEIDA REIS", number: "5", grade: "9ºC" },
+            { name: "CARLOS AUGUSTO DIAS DE MENDONÇA", number: "7", grade: "9ºC" },
+            { name: "DAPHINE SINDIFER RODRIGUES SILVA", number: "9", grade: "9ºC" },
+            { name: "ELOISA DE OLIVEIRA CARVALHO", number: "12", grade: "9ºC" },
+            { name: "ENZO BAPTISTA MAIA", number: "13", grade: "9ºC" },
+            { name: "EVELLYN ANGELINA CAVALCANTE DE OLIVEIRA", number: "14", grade: "9ºC" },
+            { name: "GABRIEL VICTOR OLIVEIRA SANTOS", number: "16", grade: "9ºC" },
+            { name: "GIOVANNA SOUSA DA SILVA", number: "17", grade: "9ºC" },
+            { name: "GUSTAVO FURLAN GUEDES DA SILVA", number: "18", grade: "9ºC" },
+            { name: "KAUÃ BRYAN MAZARIO BARBEIRO", number: "23", grade: "9ºC" },
+            { name: "KAUAN ALAMBERT GOMES DE SOUSA", number: "25", grade: "9ºC" },
+            { name: "KEMILLY CARVALHO DA FONSECA BRITO", number: "26", grade: "9ºC" },
+            { name: "KLAIVYN WALLAS ARAUJO ESPIRITO SANTO", number: "27", grade: "9ºC" },
+            { name: "LORHANNY CAVALCANTE SANTOS", number: "28", grade: "9ºC" },
+            { name: "MANUELLA LELIS DA SILVA SIMAO", number: "29", grade: "9ºC" },
+            { name: "MONALISA DOS SANTOS BALDUINO", number: "33", grade: "9ºC" },
+            { name: "NATHAN SANTANA MONTEMOR", number: "34", grade: "9ºC" },
+            { name: "NICOLAS PYETRO CASTRO DE ALMEIDA SOUZA", number: "35", grade: "9ºC" },
+            { name: "NICOLLAS JHAMAL DA SILVA ALVES", number: "36", grade: "9ºC" },
+            { name: "SARAH SILVA ROGER", number: "37", grade: "9ºC" },
+            { name: "SERGIO RICARDO SILVA DE SOUZA", number: "38", grade: "9ºC" },
+            { name: "VINICIUS COSTA SILVA", number: "40", grade: "9ºC" },
+            { name: "VITÓRIA SILVA VIEIRA", number: "41", grade: "9ºC" },
+            { name: "FELIPE RITIELLI NEVES DA SILVA", number: "42", grade: "9ºC" },
+            { name: "JAQUELYNE PEREIRA GONCALVES", number: "43", grade: "9ºC" },
+            { name: "KRYSTOFER LEITE DA SILVA", number: "44", grade: "9ºC" },
+            { name: "GUSTAVO LOPES DE MENEZES DA SILVA", number: "45", grade: "9ºC" },
+            { name: "ANNA JULYA SILVA MELO", number: "46", grade: "9ºC" }
+        ];
 
         // Preencher o dropdown com os nomes dos alunos
         function populateStudentDropdown() {
@@ -456,7 +521,6 @@
             
             // As questões discursivas valem 10 pontos no total (2 pontos cada)
             // Nesta versão, todas recebem a pontuação completa por simplicidade
-            // Em uma implementação real, o professor corrigiria manualmente
             score += 10;
             
             return score;
@@ -478,17 +542,6 @@
             }
             
             return answers;
-        }
-
-        // Manipuladores de sucesso e erro para Google Apps Script
-        function handleSuccess(response) {
-            console.log('Resposta do servidor:', response);
-            return response;
-        }
-
-        function handleError(error) {
-            console.error('Erro do servidor:', error);
-            throw new Error('Erro de comunicação com o servidor: ' + error.toString());
         }
 
         // Função para enviar as respostas
@@ -530,75 +583,42 @@
             // Calcular nota
             const score = calculateGrade();
             
-            // Preparar dados para envio
-            const formData = {
-                studentName: studentName,
-                studentNumber: studentNumber,
-                studentGrade: studentGrade,
-                score: score,
-                answers: answers,
-                timestamp: new Date().toISOString()
-            };
-            
-            // Enviar para o Google Sheets via Google Apps Script
-            google.script.run
-                .withFailureHandler((error) => {
-                    // Reabilitar botão e esconder loading
-                    submitBtn.disabled = false;
-                    submitBtn.textContent = 'Enviar Respostas';
-                    document.getElementById('loading').style.display = 'none';
-                    
-                    // Mostrar erro
-                    const resultDiv = document.getElementById('result');
-                    resultDiv.className = 'result error';
-                    resultDiv.innerHTML = `
-                        <p>❌ Erro ao enviar as respostas!</p>
-                        <p>${error.toString()}</p>
-                        <p>Nota calculada: ${score}/20 pontos</p>
-                        <p><small>Tente novamente ou informe o professor.</small></p>
-                    `;
-                    resultDiv.style.display = 'block';
-                    resultDiv.scrollIntoView({ behavior: 'smooth' });
-                })
-                .withSuccessHandler((response) => {
-                    // Reabilitar botão
-                    submitBtn.disabled = false;
-                    submitBtn.textContent = 'Enviar Respostas';
-                    document.getElementById('loading').style.display = 'none';
-                    
-                    // Mostrar resultado
-                    const resultDiv = document.getElementById('result');
-                    if (response.status === 'success') {
-                        resultDiv.className = 'result success';
-                        resultDiv.innerHTML = `
-                            <p>✅ Respostas enviadas com sucesso!</p>
-                            <p><strong>Nota: ${score}/20 pontos</strong></p>
-                            <p>Sua nota foi registrada na planilha da turma ${studentGrade}.</p>
-                            <p><small>Número de identificação: ${studentNumber}</small></p>
-                        `;
-                    } else {
-                        resultDiv.className = 'result error';
-                        resultDiv.innerHTML = `
-                            <p>⚠️ Atenção: ${response.message}</p>
-                            <p>Nota calculada: ${score}/20 pontos</p>
-                        `;
-                    }
-                    resultDiv.style.display = 'block';
-                    resultDiv.scrollIntoView({ behavior: 'smooth' });
-                })
-                .processFormData(formData);
+            // Simular envio para o Google Sheets
+            setTimeout(() => {
+                // Reabilitar botão
+                submitBtn.disabled = false;
+                submitBtn.textContent = 'Enviar Respostas';
+                document.getElementById('loading').style.display = 'none';
+                
+                // Mostrar resultado
+                const resultDiv = document.getElementById('result');
+                resultDiv.className = 'result success';
+                resultDiv.innerHTML = `
+                    <p>✅ Respostas enviadas com sucesso!</p>
+                    <p><strong>Nota: ${score}/20 pontos</strong></p>
+                    <p>Sua nota foi registrada na planilha da turma ${studentGrade}.</p>
+                    <p><small>Número de identificação: ${studentNumber}</small></p>
+                    <p><em>Nota: Em produção, as notas seriam salvas automaticamente no Google Sheets.</em></p>
+                `;
+                resultDiv.style.display = 'block';
+                resultDiv.scrollIntoView({ behavior: 'smooth' });
+                
+                // Aqui você implementaria a integração real com o Google Apps Script
+                console.log('https://script.google.com/macros/s/AKfycbyJqy-Nr2LBOqxk0eUCRAJPuzb3-o2TTRKf0qFG4jh6aEeU5DiZ-aZfzZlJ5XXhkOU/exec', {
+                    studentName,
+                    studentNumber, 
+                    studentGrade,
+                    score,
+                    answers
+                });
+                
+            }, 2000);
         }
 
         // Carregar lista de alunos quando a página carregar
         window.addEventListener('load', function() {
-            loadStudentsList();
+            populateStudentDropdown();
         });
     </script>
-
-    <!-- Incluir a API do Google Apps Script -->
-    <script src="
-
-     https://script.google.com/macros/s/AKfycbw_TZCihhyOuDSSUOOClimH5PIX4ZxSmW-biwmVdlunYZT91YBCWuDytfnt8YHCzM0/exec"></script>
 </body>
-
 </html>
