@@ -1,0 +1,601 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Atividade de Ciências - Posição, Distância e Velocidade</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #2c3e50, #4a6491);
+            color: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 25px;
+            text-align: center;
+        }
+        
+        .school-name {
+            font-weight: bold;
+            font-size: 22px;
+            margin-bottom: 20px;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
+        }
+        
+        .student-info {
+            display: flex;
+            justify-content: space-between;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        
+        .info-group {
+            flex: 1;
+            min-width: 150px;
+        }
+        
+        .info-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            font-size: 14px;
+        }
+        
+        .info-group select, .info-group input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 14px;
+            background-color: white;
+        }
+        
+        .questions-container {
+            background-color: #f8f9fa;
+            padding: 25px;
+            border-radius: 8px;
+            box-shadow: 
+                inset 0 2px 5px rgba(0,0,0,0.1),
+                0 4px 10px rgba(0,0,0,0.08);
+            margin-top: 20px;
+            border: 1px solid #e9ecef;
+        }
+        
+        .question {
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #dee2e6;
+        }
+        
+        .question:last-child {
+            border-bottom: none;
+        }
+        
+        .question-number {
+            font-weight: bold;
+            margin-bottom: 12px;
+            color: #2c3e50;
+            font-size: 16px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .question-number:before {
+            content: "•";
+            margin-right: 8px;
+            color: #3498db;
+        }
+        
+        .question-text {
+            font-weight: bold;
+            margin-bottom: 18px;
+            color: #34495e;
+            font-size: 15px;
+            background-color: #e8f4fc;
+            padding: 12px 15px;
+            border-radius: 6px;
+            border-left: 4px solid #3498db;
+        }
+        
+        .options {
+            margin-left: 10px;
+        }
+        
+        .option {
+            margin-bottom: 12px;
+            padding: 10px;
+            border-radius: 6px;
+            transition: background-color 0.2s;
+        }
+        
+        .option:hover {
+            background-color: #f1f8ff;
+        }
+        
+        .option input {
+            margin-right: 10px;
+        }
+        
+        .discursive {
+            margin-top: 15px;
+        }
+        
+        .discursive textarea {
+            width: 100%;
+            height: 100px;
+            padding: 12px;
+            border: 1px solid #ced4da;
+            border-radius: 6px;
+            resize: vertical;
+            font-family: inherit;
+            font-size: 14px;
+        }
+        
+        .submit-btn {
+            background: linear-gradient(to right, #27ae60, #2ecc71);
+            color: white;
+            padding: 12px 30px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            margin-top: 25px;
+            transition: all 0.3s;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+        
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+        
+        .submit-btn:disabled {
+            background: #95a5a6;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+        
+        .loading {
+            display: none;
+            text-align: center;
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #fff3cd;
+            border: 1px solid #ffeaa7;
+            border-radius: 6px;
+            color: #856404;
+        }
+        
+        .result {
+            display: none;
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 6px;
+            text-align: center;
+            font-weight: bold;
+        }
+        
+        .success {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        
+        .error {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="school-name">E.E. PROFª WANDA MASCAGNI DE SÁ</div>
+            <div class="student-info">
+                <div class="info-group">
+                    <label for="student-name">NOME:</label>
+                    <select id="student-name">
+                        <option value="">Selecione seu nome</option>
+                        <!-- As opções serão preenchidas via JavaScript -->
+                    </select>
+                </div>
+                <div class="info-group">
+                    <label for="student-number">Nº:</label>
+                    <input type="text" id="student-number" readonly>
+                </div>
+                <div class="info-group">
+                    <label for="student-grade">SÉRIE:</label>
+                    <input type="text" id="student-grade" readonly>
+                </div>
+            </div>
+        </div>
+        
+        <div class="questions-container">
+            <!-- Questões de Múltipla Escolha -->
+            <div class="question">
+                <div class="question-number">1. (Múltipla Escolha)</div>
+                <div class="question-text">
+                    João e Maria decidiram fazer exercícios físicos para melhorar sua saúde. João caminhou 5 km em uma rua do bairro, partindo de sua casa e indo até o parque municipal. Maria, por outro lado, caminhou 5 km em uma esteira na academia do condomínio onde mora. Considerando os conceitos de distância percorrida e deslocamento estudados em aula, analise as afirmações abaixo e selecione a alternativa correta:
+                </div>
+                <div class="options">
+                    <div class="option"><input type="radio" name="q1" value="a"> a) Ambos percorreram a mesma distância (5 km), mas João teve um deslocamento de 5 km (da casa ao parque), enquanto Maria teve deslocamento zero, pois começou e terminou no mesmo lugar.</div>
+                    <div class="option"><input type="radio" name="q1" value="b"> b) Ambos tiveram o mesmo deslocamento (5 km), mas Maria percorreu uma distância maior porque a esteira exige mais esforço físico.</div>
+                    <div class="option"><input type="radio" name="q1" value="c"> c) João percorreu maior distância porque enfrentou obstáculos na rua, mas ambos tiveram o mesmo deslocamento.</div>
+                    <div class="option"><input type="radio" name="q1" value="d"> d) Maria percorreu maior distância porque a esteira conta apenas o movimento efetivo, mas ambos tiveram deslocamento zero por fazerem exercício no mesmo local.</div>
+                </div>
+            </div>
+            
+            <div class="question">
+                <div class="question-number">2. (Múltipla Escolha)</div>
+                <div class="question-text">
+                    Durante uma caminhada de avaliação física, uma pessoa parte do ponto A (0 m) e caminha em linha reta até o ponto C (10 m). Após descansar por alguns minutos, ela resolve voltar e caminha até o ponto B (6 m). Considerando essa situação e os conceitos de distância percorrida e deslocamento, qual alternativa apresenta os valores corretos?
+                </div>
+                <div class="options">
+                    <div class="option"><input type="radio" name="q2" value="a"> a) Distância percorrida: 14 metros (10 m na ida + 4 m na volta) | Deslocamento: 6 metros (diferença entre posição final B e inicial A)</div>
+                    <div class="option"><input type="radio" name="q2" value="b"> b) Distância percorrida: 10 metros (apenas a ida) | Deslocamento: 4 metros (diferença entre posição final B e ponto C)</div>
+                    <div class="option"><input type="radio" name="q2" value="c"> c) Distância percorrida: 16 metros (10 m na ida + 6 m na volta) | Deslocamento: 0 metros (porque voltou parte do caminho)</div>
+                    <div class="option"><input type="radio" name="q2" value="d"> d) Distância percorrida: 14 metros (10 m na ida + 4 m na volta) | Deslocamento: 4 metros (diferença entre posição final B e inicial A)</div>
+                </div>
+            </div>
+            
+            <div class="question">
+                <div class="question-number">3. (Múltipla Escolha)</div>
+                <div class="question-text">
+                    Maria está participando de um teste de capacidade física na escola. Ela precisa percorrer 150 metros no pátio em formato retangular. Ela completa o percurso em exatos 30 segundos. Para calcular sua velocidade média, o professor explica que é necessário relacionar o deslocamento com o tempo gasto. Considerando essas informações, qual foi a velocidade média de Maria?
+                </div>
+                <div class="options">
+                    <div class="option"><input type="radio" name="q3" value="a"> a) 5 m/s, pois 150 metros divididos por 30 segundos resulta em 5 metros por segundo</div>
+                    <div class="option"><input type="radio" name="q3" value="b"> b) 50 m/s, pois a velocidade em metros por segundo é sempre maior que em km/h</div>
+                    <div class="option"><input type="radio" name="q3" value="c"> c) 0,05 m/s, pois é necessário converter segundos para minutos no cálculo</div>
+                    <div class="option"><input type="radio" name="q3" value="d"> d) 0,5 m/s, pois a velocidade média considera apenas o deslocamento final</div>
+                </div>
+            </div>
+            
+            <div class="question">
+                <div class="question-number">4. (Múltipla Escolha)</div>
+                <div class="question-text">
+                    Durante uma aula prática sobre movimento, os estudantes observaram um carro passando por frente à escola. O professor explicou que o velocímetro do carro mostra a velocidade instantânea, enquanto para calcular a velocidade média seria necessário conhecer todo o percurso. Sobre os conceitos de velocidade média e velocidade instantânea, qual afirmação está correta?
+                </div>
+                <div class="options">
+                    <div class="option"><input type="radio" name="q4" value="a"> a) A velocidade média é sempre maior que a velocidade instantânea, pois considera todo o trajeto</div>
+                    <div class="option"><input type="radio" name="q4" value="b"> b) A velocidade instantânea é a velocidade em um instante específico, como a mostrada no velocímetro de um carro</div>
+                    <div class="option"><input type="radio" name="q4" value="c"> c) A velocidade média não depende do referencial adotado, apenas da distância percorrida</div>
+                    <div class="option"><input type="radio" name="q4" value="d"> d) A velocidade instantânea é calculada como a média de todas as velocidades durante o percurso</div>
+                </div>
+            </div>
+            
+            <div class="question">
+                <div class="question-number">5. (Múltipla Escolha)</div>
+                <div class="question-text">
+                    Um drone ambulância está sendo testado para levar pequenos equipamentos de primeiros socorros. Em um teste, o drone se desloca 9000 metros em linha reta em 300 segundos. Os engenheiros precisam calcular a velocidade média do drone para avaliar sua eficiência. Considerando a relação entre deslocamento e tempo, qual é a velocidade média aproximada do drone?
+                </div>
+                <div class="options">
+                    <div class="option"><input type="radio" name="q5" value="a"> a) 30 m/s, pois 9000 metros divididos por 300 segundos resulta em 30 metros por segundo</div>
+                    <div class="option"><input type="radio" name="q5" value="b"> b) 930 m/s, valor que seria obtido se considerássemos apenas os primeiros 100 metros</div>
+                    <div class="option"><input type="radio" name="q5" value="c"> c) 8700 m/s, resultado da multiplicação entre distância e tempo</div>
+                    <div class="option"><input type="radio" name="q5" value="d"> d) 0,033... m/s, valor obtido ao dividir 300 segundos por 9000 metros</div>
+                </div>
+            </div>
+            
+            <!-- Questões Discursivas -->
+            <div class="question">
+                <div class="question-number">6. (Discursiva)</div>
+                <div class="question-text">
+                    Na aula prática, observamos a situação de uma vaca que se desloca do ponto A ao ponto B (5 metros) e depois retorna ao ponto A. Dois observadores acompanharam o movimento: João, que observou todo o trajeto, e Maria, que se distraiu e só viu a vaca no início e no final. Explique detalhadamente a diferença entre distância percorrida e deslocamento nesta situação, considerando as perspectivas de ambos os observadores.
+                </div>
+                <div class="discursive">
+                    <textarea id="q6" placeholder="Digite sua resposta aqui..."></textarea>
+                </div>
+            </div>
+            
+            <div class="question">
+                <div class="question-number">7. (Discursiva)</div>
+                <div class="question-text">
+                    Os sistemas de GPS são amplamente utilizados atualmente para navegação. Quando um GPS indica que faltam 3 km para chegar ao destino final, ele está se referindo à distância ou ao deslocamento? Justifique sua resposta com base nos conceitos estudados, considerando como os GPS calculam rotas e fornecem informações aos usuários.
+                </div>
+                <div class="discursive">
+                    <textarea id="q7" placeholder="Digite sua resposta aqui..."></textarea>
+                </div>
+            </div>
+            
+            <div class="question">
+                <div class="question-number">8. (Discursiva)</div>
+                <div class="question-text">
+                    Um veículo percorre o Trecho 1 de uma rodovia (100 km) em 1 hora e o Trecho 2 (120 km) também em 1 hora. Calcule a velocidade média total do percurso, demonstrando todos os passos do seu raciocínio. Em seguida, explique por que a velocidade média total não é simplesmente a média aritmética das duas velocidades (100 km/h e 120 km/h) neste caso específico.
+                </div>
+                <div class="discursive">
+                    <textarea id="q8" placeholder="Digite sua resposta aqui..."></textarea>
+                </div>
+            </div>
+            
+            <div class="question">
+                <div class="question-number">9. (Discursiva)</div>
+                <div class="question-text">
+                    A escolha do referencial é fundamental para a descrição do movimento. Utilizando como exemplo uma pessoa dentro de um vagão de trem em movimento, explique por que essa pessoa pode ser considerada em repouso ou em movimento dependendo do referencial adotado. Relacione essa situação com o conceito de movimento relativo estudado em aula.
+                </div>
+                <div class="discursive">
+                    <textarea id="q9" placeholder="Digite sua resposta aqui..."></textarea>
+                </div>
+            </div>
+            
+            <div class="question">
+                <div class="question-number">10. (Discursiva)</div>
+                <div class="question-text">
+                    Compare detalhadamente as situações de João (andando na rua) e Maria (andando na esteira) em termos de distância percorrida, deslocamento e possível gasto energético. Considere os conceitos físicos estudados e discuta se podemos afirmar que ambos gastaram a mesma quantidade de energia, justificando sua resposta com base nos princípios da Física.
+                </div>
+                <div class="discursive">
+                    <textarea id="q10" placeholder="Digite sua resposta aqui..."></textarea>
+                </div>
+            </div>
+            
+            <button class="submit-btn" id="submit-btn" onclick="submitAnswers()">Enviar Respostas</button>
+            
+            <div class="loading" id="loading">
+                <p>📡 Enviando respostas e registrando nota na planilha...</p>
+                <p>Aguarde, isso pode levar alguns segundos.</p>
+            </div>
+            
+            <div class="result" id="result"></div>
+        </div>
+    </div>
+
+    <script>
+        // Dados dos alunos (serão carregados do Google Sheets)
+        let students = [];
+
+        // Carregar lista de alunos do Google Sheets
+        function loadStudentsList() {
+            google.script.run
+                .withFailureHandler((error) => {
+                    console.error('Erro ao carregar alunos:', error);
+                    // Usar lista fallback caso haja erro
+                    loadFallbackStudents();
+                })
+                .withSuccessHandler((studentsList) => {
+                    students = studentsList;
+                    populateStudentDropdown();
+                })
+                .getStudentsList();
+        }
+
+        // Lista fallback caso não consiga carregar do Sheets
+        function loadFallbackStudents() {
+            students = [
+                { name: "ÁGATHA NIKOLLE DA SILVA RAMOS", number: "1", grade: "9ºA" },
+                { name: "AMANDA BEATRIZ LEAL MOURAD", number: "2", grade: "9ºA" },
+                { name: "ANNA NICOLY BENVINDO DOS SANTOS", number: "4", grade: "9ºA" },
+                { name: "ARTHUR DOS SANTOS", number: "5", grade: "9ºA" },
+                { name: "BEATRIZ UCHOA DOS SANTOS", number: "6", grade: "9ºA" },
+                // ... (incluir todos os outros alunos da lista anterior)
+            ];
+            populateStudentDropdown();
+        }
+
+        // Preencher o dropdown com os nomes dos alunos
+        function populateStudentDropdown() {
+            const studentSelect = document.getElementById('student-name');
+            
+            // Limpar opções existentes (exceto a primeira)
+            while (studentSelect.children.length > 1) {
+                studentSelect.removeChild(studentSelect.lastChild);
+            }
+            
+            // Adicionar alunos organizados por turma
+            const grades = ['9ºA', '9ºB', '9ºC'];
+            
+            grades.forEach(grade => {
+                const gradeStudents = students.filter(student => student.grade === grade);
+                
+                if (gradeStudents.length > 0) {
+                    // Adicionar separador de turma
+                    const optgroup = document.createElement('optgroup');
+                    optgroup.label = `Turma ${grade}`;
+                    studentSelect.appendChild(optgroup);
+                    
+                    // Adicionar alunos da turma
+                    gradeStudents.forEach(student => {
+                        const option = document.createElement('option');
+                        option.value = student.name;
+                        option.textContent = `${student.name} (Nº ${student.number})`;
+                        optgroup.appendChild(option);
+                    });
+                }
+            });
+        }
+
+        // Atualizar número e série quando um aluno for selecionado
+        document.getElementById('student-name').addEventListener('change', function() {
+            const selectedStudent = students.find(student => student.name === this.value);
+            if (selectedStudent) {
+                document.getElementById('student-number').value = selectedStudent.number;
+                document.getElementById('student-grade').value = selectedStudent.grade;
+            } else {
+                document.getElementById('student-number').value = '';
+                document.getElementById('student-grade').value = '';
+            }
+        });
+
+        // Função para calcular a nota
+        function calculateGrade() {
+            let score = 0;
+            
+            // Verificar respostas das questões de múltipla escolha
+            const correctAnswers = {
+                q1: 'a',
+                q2: 'a',
+                q3: 'a',
+                q4: 'b',
+                q5: 'a'
+            };
+            
+            for (let i = 1; i <= 5; i++) {
+                const selectedOption = document.querySelector(`input[name="q${i}"]:checked`);
+                if (selectedOption && selectedOption.value === correctAnswers[`q${i}`]) {
+                    score += 2; // 2 pontos por questão de múltipla escolha
+                }
+            }
+            
+            // As questões discursivas valem 10 pontos no total (2 pontos cada)
+            // Nesta versão, todas recebem a pontuação completa por simplicidade
+            // Em uma implementação real, o professor corrigiria manualmente
+            score += 10;
+            
+            return score;
+        }
+
+        // Função para coletar todas as respostas
+        function collectAllAnswers() {
+            const answers = {};
+            
+            // Coletar respostas de múltipla escolha
+            for (let i = 1; i <= 5; i++) {
+                const selectedOption = document.querySelector(`input[name="q${i}"]:checked`);
+                answers[`q${i}`] = selectedOption ? selectedOption.value : '';
+            }
+            
+            // Coletar respostas discursivas
+            for (let i = 6; i <= 10; i++) {
+                answers[`q${i}`] = document.getElementById(`q${i}`).value;
+            }
+            
+            return answers;
+        }
+
+        // Manipuladores de sucesso e erro para Google Apps Script
+        function handleSuccess(response) {
+            console.log('Resposta do servidor:', response);
+            return response;
+        }
+
+        function handleError(error) {
+            console.error('Erro do servidor:', error);
+            throw new Error('Erro de comunicação com o servidor: ' + error.toString());
+        }
+
+        // Função para enviar as respostas
+        function submitAnswers() {
+            const studentName = document.getElementById('student-name').value;
+            const studentNumber = document.getElementById('student-number').value;
+            const studentGrade = document.getElementById('student-grade').value;
+            const submitBtn = document.getElementById('submit-btn');
+            
+            if (!studentName) {
+                alert('Por favor, selecione seu nome antes de enviar as respostas.');
+                return;
+            }
+            
+            // Verificar se todas as questões de múltipla escolha foram respondidas
+            let allMultipleChoiceAnswered = true;
+            for (let i = 1; i <= 5; i++) {
+                if (!document.querySelector(`input[name="q${i}"]:checked`)) {
+                    allMultipleChoiceAnswered = false;
+                    break;
+                }
+            }
+            
+            if (!allMultipleChoiceAnswered) {
+                if (!confirm('Você não respondeu todas as questões de múltipla escolha. Deseja enviar mesmo assim?')) {
+                    return;
+                }
+            }
+            
+            // Desabilitar botão e mostrar loading
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Enviando...';
+            document.getElementById('loading').style.display = 'block';
+            document.getElementById('result').style.display = 'none';
+            
+            // Coletar todas as respostas
+            const answers = collectAllAnswers();
+            
+            // Calcular nota
+            const score = calculateGrade();
+            
+            // Preparar dados para envio
+            const formData = {
+                studentName: studentName,
+                studentNumber: studentNumber,
+                studentGrade: studentGrade,
+                score: score,
+                answers: answers,
+                timestamp: new Date().toISOString()
+            };
+            
+            // Enviar para o Google Sheets via Google Apps Script
+            google.script.run
+                .withFailureHandler((error) => {
+                    // Reabilitar botão e esconder loading
+                    submitBtn.disabled = false;
+                    submitBtn.textContent = 'Enviar Respostas';
+                    document.getElementById('loading').style.display = 'none';
+                    
+                    // Mostrar erro
+                    const resultDiv = document.getElementById('result');
+                    resultDiv.className = 'result error';
+                    resultDiv.innerHTML = `
+                        <p>❌ Erro ao enviar as respostas!</p>
+                        <p>${error.toString()}</p>
+                        <p>Nota calculada: ${score}/20 pontos</p>
+                        <p><small>Tente novamente ou informe o professor.</small></p>
+                    `;
+                    resultDiv.style.display = 'block';
+                    resultDiv.scrollIntoView({ behavior: 'smooth' });
+                })
+                .withSuccessHandler((response) => {
+                    // Reabilitar botão
+                    submitBtn.disabled = false;
+                    submitBtn.textContent = 'Enviar Respostas';
+                    document.getElementById('loading').style.display = 'none';
+                    
+                    // Mostrar resultado
+                    const resultDiv = document.getElementById('result');
+                    if (response.status === 'success') {
+                        resultDiv.className = 'result success';
+                        resultDiv.innerHTML = `
+                            <p>✅ Respostas enviadas com sucesso!</p>
+                            <p><strong>Nota: ${score}/20 pontos</strong></p>
+                            <p>Sua nota foi registrada na planilha da turma ${studentGrade}.</p>
+                            <p><small>Número de identificação: ${studentNumber}</small></p>
+                        `;
+                    } else {
+                        resultDiv.className = 'result error';
+                        resultDiv.innerHTML = `
+                            <p>⚠️ Atenção: ${response.message}</p>
+                            <p>Nota calculada: ${score}/20 pontos</p>
+                        `;
+                    }
+                    resultDiv.style.display = 'block';
+                    resultDiv.scrollIntoView({ behavior: 'smooth' });
+                })
+                .processFormData(formData);
+        }
+
+        // Carregar lista de alunos quando a página carregar
+        window.addEventListener('load', function() {
+            loadStudentsList();
+        });
+    </script>
+
+    <!-- Incluir a API do Google Apps Script -->
+    <script src="https://apis.google.com/js/api.js"></script>
+</body>
+</html>
