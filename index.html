@@ -635,7 +635,7 @@
       const answers = collectAllAnswers();
 
       try {
-        const res = await fetch('https://script.google.com/macros/s/SEU_SCRIPT_URL_AQUI/exec', {
+        const res = await fetch('https://script.google.com/macros/s/AKfycbxP47fXyjnDPRI0sI884eVz7qTK9ZdGXmWrNvg8ah4yATjhSfqhv_2YW3C09PTC530/exec', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ studentName: name, studentNumber: number, studentGrade: grade, score, answers })
@@ -662,3 +662,4 @@
   </script>
 </body>
 </html>
+
