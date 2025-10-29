@@ -1,6 +1,121 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Atividade de Ciências - Posição, Distância e Velocidade</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+      padding: 20px;
+      background-color: #f5f5f5;
+      line-height: 1.6;
+    }
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      background-color: white;
+      padding: 25px;
+      border-radius: 12px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    }
+    .header {
+      background: linear-gradient(135deg, #2c3e50, #4a6491);
+      color: white;
+      padding: 20px;
+      border-radius: 8px;
+      margin-bottom: 25px;
+      text-align: center;
+    }
+    .school-name {
+      font-weight: bold;
+      font-size: 22px;
+      margin-bottom: 20px;
+      text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
+    }
+    .student-info {
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+    .info-group {
+      flex: 1;
+      min-width: 150px;
+    }
+    .info-group label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: bold;
+      font-size: 14px;
+    }
+    .info-group select, .info-group input {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      font-size: 14px;
+      background-color: white;
+    }
+    .questions-container {
+      background-color: #f8f9fa;
+      padding: 25px;
+      border-radius: 8px;
+      box-shadow: inset 0 2px 5px rgba(0,0,0,0.1), 0 4px 10px rgba(0,0,0,0.08);
+      margin-top: 20px;
+      border: 1px solid #e9ecef;
+    }
+    .question { margin-bottom: 30px; padding-bottom: 20px; border-bottom: 1px solid #dee2e6; }
+    .question:last-child { border-bottom: none; }
+    .question-number {
+      font-weight: bold;
+      margin-bottom: 12px;
+      color: #2c3e50;
+      font-size: 16px;
+    }
+    .question-text {
+      font-weight: bold;
+      margin-bottom: 18px;
+      color: #34495e;
+      font-size: 15px;
+      background-color: #e8f4fc;
+      padding: 12px 15px;
+      border-radius: 6px;
+      border-left: 4px solid #3498db;
+    }
+    .options { margin-left: 10px; }
+    .option { margin-bottom: 12px; padding: 10px; border-radius: 6px; transition: background-color 0.2s; }
+    .option:hover { background-color: #f1f8ff; }
+    .discursive textarea {
+      width: 100%; height: 100px; padding: 12px; border: 1px solid #ced4da;
+      border-radius: 6px; resize: vertical; font-family: inherit; font-size: 14px;
+    }
+    .submit-btn {
+      background: linear-gradient(to right, #27ae60, #2ecc71);
+      color: white;
+      padding: 12px 30px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 16px;
+      font-weight: bold;
+      margin-top: 25px;
+      transition: all 0.3s;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    }
+    .submit-btn:hover { transform: translateY(-2px); }
+    .submit-btn:disabled { background: #95a5a6; cursor: not-allowed; }
+    .loading {
+      display: none; text-align: center; margin-top: 20px; padding: 15px;
+      background-color: #fff3cd; border: 1px solid #ffeaa7;
+      border-radius: 6px; color: #856404;
+    }
+    .result { display: none; margin-top: 20px; padding: 15px; border-radius: 6px; text-align: center; font-weight: bold; }
+    .success { background-color: #d4edda; color: #155724; border: 1px solid #c3e6cb; }
+    .error { background-color: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; }
+  </style>
+<head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Atividade de Ciências - Posição, Distância e Velocidade</title>
@@ -357,8 +472,10 @@
         </div>
     </div>
 
-    <script>
-        // Dados dos alunos baseados na planilha fornecida
+
+  <script>
+    // === LISTA DE ALUNOS (igual à sua versão) ===
+     // Dados dos alunos baseados na planilha fornecida
         const students = [
             // 9ºA
             { name: "ÁGATHA NIKOLLE DA SILVA RAMOS", number: "1", grade: "9ºA" },
@@ -455,170 +572,93 @@
             { name: "ANNA JULYA SILVA MELO", number: "46", grade: "9ºC" }
         ];
 
-        // Preencher o dropdown com os nomes dos alunos
-        function populateStudentDropdown() {
-            const studentSelect = document.getElementById('student-name');
-            
-            // Limpar opções existentes (exceto a primeira)
-            while (studentSelect.children.length > 1) {
-                studentSelect.removeChild(studentSelect.lastChild);
-            }
-            
-            // Adicionar alunos organizados por turma
-            const grades = ['9ºA', '9ºB', '9ºC'];
-            
-            grades.forEach(grade => {
-                const gradeStudents = students.filter(student => student.grade === grade);
-                
-                if (gradeStudents.length > 0) {
-                    // Adicionar separador de turma
-                    const optgroup = document.createElement('optgroup');
-                    optgroup.label = `Turma ${grade}`;
-                    studentSelect.appendChild(optgroup);
-                    
-                    // Adicionar alunos da turma
-                    gradeStudents.forEach(student => {
-                        const option = document.createElement('option');
-                        option.value = student.name;
-                        option.textContent = `${student.name} (Nº ${student.number})`;
-                        optgroup.appendChild(option);
-                    });
-                }
-            });
-        }
-
-        // Atualizar número e série quando um aluno for selecionado
-        document.getElementById('student-name').addEventListener('change', function() {
-            const selectedStudent = students.find(student => student.name === this.value);
-            if (selectedStudent) {
-                document.getElementById('student-number').value = selectedStudent.number;
-                document.getElementById('student-grade').value = selectedStudent.grade;
-            } else {
-                document.getElementById('student-number').value = '';
-                document.getElementById('student-grade').value = '';
-            }
+    // === PREENCHE DROPDOWN ===
+    function populateStudentDropdown() {
+      const select = document.getElementById('student-name');
+      ['9ºA','9ºB','9ºC'].forEach(grade => {
+        const group = document.createElement('optgroup');
+        group.label = `Turma ${grade}`;
+        students.filter(s => s.grade === grade).forEach(s => {
+          const opt = document.createElement('option');
+          opt.value = s.name;
+          opt.textContent = `${s.name} (Nº ${s.number})`;
+          group.appendChild(opt);
         });
+        select.appendChild(group);
+      });
+    }
 
-        // Função para calcular a nota
-        function calculateGrade() {
-            let score = 0;
-            
-            // Verificar respostas das questões de múltipla escolha
-            const correctAnswers = {
-                q1: 'a',
-                q2: 'a',
-                q3: 'a',
-                q4: 'b',
-                q5: 'a'
-            };
-            
-            for (let i = 1; i <= 5; i++) {
-                const selectedOption = document.querySelector(`input[name="q${i}"]:checked`);
-                if (selectedOption && selectedOption.value === correctAnswers[`q${i}`]) {
-                    score += 2; // 2 pontos por questão de múltipla escolha
-                }
-            }
-            
-            // As questões discursivas valem 10 pontos no total (2 pontos cada)
-            // Nesta versão, todas recebem a pontuação completa por simplicidade
-            score += 10;
-            
-            return score;
-        }
+    document.getElementById('student-name').addEventListener('change', function() {
+      const s = students.find(st => st.name === this.value);
+      document.getElementById('student-number').value = s ? s.number : '';
+      document.getElementById('student-grade').value = s ? s.grade : '';
+    });
 
-        // Função para coletar todas as respostas
-        function collectAllAnswers() {
-            const answers = {};
-            
-            // Coletar respostas de múltipla escolha
-            for (let i = 1; i <= 5; i++) {
-                const selectedOption = document.querySelector(`input[name="q${i}"]:checked`);
-                answers[`q${i}`] = selectedOption ? selectedOption.value : '';
-            }
-            
-            // Coletar respostas discursivas
-            for (let i = 6; i <= 10; i++) {
-                answers[`q${i}`] = document.getElementById(`q${i}`).value;
-            }
-            
-            return answers;
-        }
+    // === CALCULA A NOTA ===
+    function calculateGrade() {
+      let score = 0;
+      const correct = { q1:'a', q2:'a', q3:'a', q4:'b', q5:'a' };
+      for (let i=1;i<=5;i++) {
+        const sel = document.querySelector(`input[name="q${i}"]:checked`);
+        if (sel && sel.value===correct[`q${i}`]) score+=2;
+      }
+      score += 10;
+      return score;
+    }
 
-        // Função para enviar as respostas
-        function submitAnswers() {
-            const studentName = document.getElementById('student-name').value;
-            const studentNumber = document.getElementById('student-number').value;
-            const studentGrade = document.getElementById('student-grade').value;
-            const submitBtn = document.getElementById('submit-btn');
-            
-            if (!studentName) {
-                alert('Por favor, selecione seu nome antes de enviar as respostas.');
-                return;
-            }
-            
-            // Verificar se todas as questões de múltipla escolha foram respondidas
-            let allMultipleChoiceAnswered = true;
-            for (let i = 1; i <= 5; i++) {
-                if (!document.querySelector(`input[name="q${i}"]:checked`)) {
-                    allMultipleChoiceAnswered = false;
-                    break;
-                }
-            }
-            
-            if (!allMultipleChoiceAnswered) {
-                if (!confirm('Você não respondeu todas as questões de múltipla escolha. Deseja enviar mesmo assim?')) {
-                    return;
-                }
-            }
-            
-            // Desabilitar botão e mostrar loading
-            submitBtn.disabled = true;
-            submitBtn.textContent = 'Enviando...';
-            document.getElementById('loading').style.display = 'block';
-            document.getElementById('result').style.display = 'none';
-            
-            // Coletar todas as respostas
-            const answers = collectAllAnswers();
-            
-            // Calcular nota
-            const score = calculateGrade();
-            
-            // Simular envio para o Google Sheets
-            setTimeout(() => {
-                // Reabilitar botão
-                submitBtn.disabled = false;
-                submitBtn.textContent = 'Enviar Respostas';
-                document.getElementById('loading').style.display = 'none';
-                
-                // Mostrar resultado
-                const resultDiv = document.getElementById('result');
-                resultDiv.className = 'result success';
-                resultDiv.innerHTML = `
-                    <p>✅ Respostas enviadas com sucesso!</p>
-                    <p><strong>Nota: ${score}/20 pontos</strong></p>
-                    <p>Sua nota foi registrada na planilha da turma ${studentGrade}.</p>
-                    <p><small>Número de identificação: ${studentNumber}</small></p>
-                    <p><em>Nota: Em produção, as notas seriam salvas automaticamente no Google Sheets.</em></p>
-                `;
-                resultDiv.style.display = 'block';
-                resultDiv.scrollIntoView({ behavior: 'smooth' });
-                
-                // Aqui você implementaria a integração real com o Google Apps Script
-                console.log('https://script.google.com/macros/s/AKfycbyJqy-Nr2LBOqxk0eUCRAJPuzb3-o2TTRKf0qFG4jh6aEeU5DiZ-aZfzZlJ5XXhkOU/exec', {
-                    studentName,
-                    studentNumber, 
-                    studentGrade,
-                    score,
-                    answers
-                });
-                
-            }, 2000);
-        }
+    // === COLETA RESPOSTAS ===
+    function collectAllAnswers() {
+      const ans = {};
+      for (let i=1;i<=5;i++) {
+        const sel = document.querySelector(`input[name="q${i}"]:checked`);
+        ans[`q${i}`] = sel ? sel.value : '';
+      }
+      for (let i=6;i<=10;i++) {
+        ans[`q${i}`] = document.getElementById(`q${i}`)?.value || '';
+      }
+      return ans;
+    }
 
-        // Carregar lista de alunos quando a página carregar
-        window.addEventListener('load', function() {
-            populateStudentDropdown();
+    // === ENVIA PARA O GOOGLE APPS SCRIPT ===
+    async function submitAnswers() {
+      const name = document.getElementById('student-name').value;
+      const number = document.getElementById('student-number').value;
+      const grade = document.getElementById('student-grade').value;
+      const btn = document.getElementById('submit-btn');
+      const load = document.getElementById('loading');
+      const result = document.getElementById('result');
+
+      if (!name) { alert('Selecione seu nome!'); return; }
+
+      btn.disabled = true; btn.textContent = 'Enviando...'; load.style.display = 'block'; result.style.display='none';
+      const score = calculateGrade();
+      const answers = collectAllAnswers();
+
+      try {
+        const res = await fetch('https://script.google.com/macros/s/SEU_SCRIPT_URL_AQUI/exec', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ studentName: name, studentNumber: number, studentGrade: grade, score, answers })
         });
-    </script>
+        const data = await res.json();
+
+        result.className = 'result ' + (data.status === 'success' ? 'success' : 'error');
+        result.innerHTML = data.status === 'success'
+          ? `✅ ${data.message}<br><strong>Nota:</strong> ${score}/20 pontos`
+          : `❌ ${data.message}`;
+      } catch (err) {
+        result.className = 'result error';
+        result.textContent = 'Erro ao enviar: ' + err.message;
+      } finally {
+        load.style.display = 'none';
+        btn.disabled = false;
+        btn.textContent = 'Enviar Respostas';
+        result.style.display = 'block';
+        result.scrollIntoView({ behavior: 'smooth' });
+      }
+    }
+
+    window.addEventListener('load', populateStudentDropdown);
+  </script>
 </body>
 </html>
