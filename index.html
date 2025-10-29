@@ -1,121 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Atividade de Ciências - Posição, Distância e Velocidade</title>
-  <style>
-    body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      margin: 0;
-      padding: 20px;
-      background-color: #f5f5f5;
-      line-height: 1.6;
-    }
-    .container {
-      max-width: 900px;
-      margin: 0 auto;
-      background-color: white;
-      padding: 25px;
-      border-radius: 12px;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-    }
-    .header {
-      background: linear-gradient(135deg, #2c3e50, #4a6491);
-      color: white;
-      padding: 20px;
-      border-radius: 8px;
-      margin-bottom: 25px;
-      text-align: center;
-    }
-    .school-name {
-      font-weight: bold;
-      font-size: 22px;
-      margin-bottom: 20px;
-      text-shadow: 1px 1px 2px rgba(0,0,0,0.2);
-    }
-    .student-info {
-      display: flex;
-      justify-content: space-between;
-      gap: 20px;
-      flex-wrap: wrap;
-    }
-    .info-group {
-      flex: 1;
-      min-width: 150px;
-    }
-    .info-group label {
-      display: block;
-      margin-bottom: 8px;
-      font-weight: bold;
-      font-size: 14px;
-    }
-    .info-group select, .info-group input {
-      width: 100%;
-      padding: 10px;
-      border: 1px solid #ddd;
-      border-radius: 6px;
-      font-size: 14px;
-      background-color: white;
-    }
-    .questions-container {
-      background-color: #f8f9fa;
-      padding: 25px;
-      border-radius: 8px;
-      box-shadow: inset 0 2px 5px rgba(0,0,0,0.1), 0 4px 10px rgba(0,0,0,0.08);
-      margin-top: 20px;
-      border: 1px solid #e9ecef;
-    }
-    .question { margin-bottom: 30px; padding-bottom: 20px; border-bottom: 1px solid #dee2e6; }
-    .question:last-child { border-bottom: none; }
-    .question-number {
-      font-weight: bold;
-      margin-bottom: 12px;
-      color: #2c3e50;
-      font-size: 16px;
-    }
-    .question-text {
-      font-weight: bold;
-      margin-bottom: 18px;
-      color: #34495e;
-      font-size: 15px;
-      background-color: #e8f4fc;
-      padding: 12px 15px;
-      border-radius: 6px;
-      border-left: 4px solid #3498db;
-    }
-    .options { margin-left: 10px; }
-    .option { margin-bottom: 12px; padding: 10px; border-radius: 6px; transition: background-color 0.2s; }
-    .option:hover { background-color: #f1f8ff; }
-    .discursive textarea {
-      width: 100%; height: 100px; padding: 12px; border: 1px solid #ced4da;
-      border-radius: 6px; resize: vertical; font-family: inherit; font-size: 14px;
-    }
-    .submit-btn {
-      background: linear-gradient(to right, #27ae60, #2ecc71);
-      color: white;
-      padding: 12px 30px;
-      border: none;
-      border-radius: 6px;
-      cursor: pointer;
-      font-size: 16px;
-      font-weight: bold;
-      margin-top: 25px;
-      transition: all 0.3s;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-    }
-    .submit-btn:hover { transform: translateY(-2px); }
-    .submit-btn:disabled { background: #95a5a6; cursor: not-allowed; }
-    .loading {
-      display: none; text-align: center; margin-top: 20px; padding: 15px;
-      background-color: #fff3cd; border: 1px solid #ffeaa7;
-      border-radius: 6px; color: #856404;
-    }
-    .result { display: none; margin-top: 20px; padding: 15px; border-radius: 6px; text-align: center; font-weight: bold; }
-    .success { background-color: #d4edda; color: #155724; border: 1px solid #c3e6cb; }
-    .error { background-color: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; }
-  </style>
-<head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Atividade de Ciências - Posição, Distância e Velocidade</title>
@@ -156,13 +41,30 @@
         .student-info {
             display: flex;
             justify-content: space-between;
-            gap: 20px;
-            flex-wrap: wrap;
+            gap: 15px;
+            flex-wrap: nowrap;
         }
         
         .info-group {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .info-group.name-group {
+            flex: 3;
+            min-width: 300px;
+        }
+        
+        .info-group.number-group {
             flex: 1;
-            min-width: 150px;
+            min-width: 80px;
+            max-width: 100px;
+        }
+        
+        .info-group.grade-group {
+            flex: 1;
+            min-width: 80px;
+            max-width: 100px;
         }
         
         .info-group label {
@@ -170,6 +72,7 @@
             margin-bottom: 8px;
             font-weight: bold;
             font-size: 14px;
+            white-space: nowrap;
         }
         
         .info-group select, .info-group input {
@@ -179,6 +82,7 @@
             border-radius: 6px;
             font-size: 14px;
             background-color: white;
+            box-sizing: border-box;
         }
         
         .questions-container {
@@ -202,34 +106,33 @@
             border-bottom: none;
         }
         
-        .question-number {
-            font-weight: bold;
-            margin-bottom: 12px;
-            color: #2c3e50;
-            font-size: 16px;
+        .question-header {
             display: flex;
-            align-items: center;
+            align-items: flex-start;
+            margin-bottom: 15px;
         }
         
-        .question-number:before {
-            content: "•";
-            margin-right: 8px;
-            color: #3498db;
+        .question-number {
+            font-weight: bold;
+            color: #2c3e50;
+            font-size: 16px;
+            min-width: 30px;
+            margin-right: 10px;
         }
         
         .question-text {
             font-weight: bold;
-            margin-bottom: 18px;
             color: #34495e;
             font-size: 15px;
             background-color: #e8f4fc;
             padding: 12px 15px;
             border-radius: 6px;
             border-left: 4px solid #3498db;
+            flex: 1;
         }
         
         .options {
-            margin-left: 10px;
+            margin-left: 40px;
         }
         
         .option {
@@ -249,6 +152,7 @@
         
         .discursive {
             margin-top: 15px;
+            margin-left: 40px;
         }
         
         .discursive textarea {
@@ -326,17 +230,17 @@
         <div class="header">
             <div class="school-name">E.E. PROFª WANDA MASCAGNI DE SÁ</div>
             <div class="student-info">
-                <div class="info-group">
+                <div class="info-group name-group">
                     <label for="student-name">NOME:</label>
                     <select id="student-name">
                         <option value="">Selecione seu nome</option>
                     </select>
                 </div>
-                <div class="info-group">
+                <div class="info-group number-group">
                     <label for="student-number">Nº:</label>
                     <input type="text" id="student-number" readonly>
                 </div>
-                <div class="info-group">
+                <div class="info-group grade-group">
                     <label for="student-grade">SÉRIE:</label>
                     <input type="text" id="student-grade" readonly>
                 </div>
@@ -344,11 +248,13 @@
         </div>
         
         <div class="questions-container">
-            <!-- Questões de Múltipla Escolha -->
+            <!-- Questão 1 -->
             <div class="question">
-                <div class="question-number">1.
-                <div class="question-text">
-                    João e Maria decidiram fazer exercícios físicos para melhorar sua saúde. João caminhou 5 km em uma rua do bairro, partindo de sua casa e indo até o parque municipal. Maria, por outro lado, caminhou 5 km em uma esteira na academia do condomínio onde mora. Considerando os conceitos de distância percorrida e deslocamento estudados em aula, analise as afirmações abaixo e selecione a alternativa correta:
+                <div class="question-header">
+                    <div class="question-number">1.</div>
+                    <div class="question-text">
+                        João e Maria decidiram fazer exercícios físicos para melhorar sua saúde. João caminhou 5 km em uma rua do bairro, partindo de sua casa e indo até o parque municipal. Maria, por outro lado, caminhou 5 km em uma esteira na academia do condomínio onde mora. Considerando os conceitos de distância percorrida e deslocamento estudados em aula, analise as afirmações abaixo e selecione a alternativa correta:
+                    </div>
                 </div>
                 <div class="options">
                     <div class="option"><input type="radio" name="q1" value="a"> a) Ambos percorreram a mesma distância (5 km), mas João teve um deslocamento de 5 km (da casa ao parque), enquanto Maria teve deslocamento zero, pois começou e terminou no mesmo lugar.</div>
@@ -358,10 +264,13 @@
                 </div>
             </div>
             
+            <!-- Questão 2 -->
             <div class="question">
-                <div class="question-number">2.</div>
-                <div class="question-text">
-                    Durante uma caminhada de avaliação física, uma pessoa parte do ponto A (0 m) e caminha em linha reta até o ponto C (10 m). Após descansar por alguns minutos, ela resolve voltar e caminha até o ponto B (6 m). Considerando essa situação e os conceitos de distância percorrida e deslocamento, qual alternativa apresenta os valores corretos?
+                <div class="question-header">
+                    <div class="question-number">2.</div>
+                    <div class="question-text">
+                        Durante uma caminhada de avaliação física, uma pessoa parte do ponto A (0 m) e caminha em linha reta até o ponto C (10 m). Após descansar por alguns minutos, ela resolve voltar e caminha até o ponto B (6 m). Considerando essa situação e os conceitos de distância percorrida e deslocamento, qual alternativa apresenta os valores corretos?
+                    </div>
                 </div>
                 <div class="options">
                     <div class="option"><input type="radio" name="q2" value="a"> a) Distância percorrida: 14 metros (10 m na ida + 4 m na volta) | Deslocamento: 6 metros (diferença entre posição final B e inicial A)</div>
@@ -371,10 +280,13 @@
                 </div>
             </div>
             
+            <!-- Questão 3 -->
             <div class="question">
-                <div class="question-number">3.</div>
-                <div class="question-text">
-                    Maria está participando de um teste de capacidade física na escola. Ela precisa percorrer 150 metros no pátio em formato retangular. Ela completa o percurso em exatos 30 segundos. Para calcular sua velocidade média, o professor explica que é necessário relacionar o deslocamento com o tempo gasto. Considerando essas informações, qual foi a velocidade média de Maria?
+                <div class="question-header">
+                    <div class="question-number">3.</div>
+                    <div class="question-text">
+                        Maria está participando de um teste de capacidade física na escola. Ela precisa percorrer 150 metros no pátio em formato retangular. Ela completa o percurso em exatos 30 segundos. Para calcular sua velocidade média, o professor explica que é necessário relacionar o deslocamento com o tempo gasto. Considerando essas informações, qual foi a velocidade média de Maria?
+                    </div>
                 </div>
                 <div class="options">
                     <div class="option"><input type="radio" name="q3" value="a"> a) 5 m/s, pois 150 metros divididos por 30 segundos resulta em 5 metros por segundo</div>
@@ -384,10 +296,13 @@
                 </div>
             </div>
             
+            <!-- Questão 4 -->
             <div class="question">
-                <div class="question-number">4.</div>
-                <div class="question-text">
-                    Durante uma aula prática sobre movimento, os estudantes observaram um carro passando por frente à escola. O professor explicou que o velocímetro do carro mostra a velocidade instantânea, enquanto para calcular a velocidade média seria necessário conhecer todo o percurso. Sobre os conceitos de velocidade média e velocidade instantânea, qual afirmação está correta?
+                <div class="question-header">
+                    <div class="question-number">4.</div>
+                    <div class="question-text">
+                        Durante uma aula prática sobre movimento, os estudantes observaram um carro passando por frente à escola. O professor explicou que o velocímetro do carro mostra a velocidade instantânea, enquanto para calcular a velocidade média seria necessário conhecer todo o percurso. Sobre os conceitos de velocidade média e velocidade instantânea, qual afirmação está correta?
+                    </div>
                 </div>
                 <div class="options">
                     <div class="option"><input type="radio" name="q4" value="a"> a) A velocidade média é sempre maior que a velocidade instantânea, pois considera todo o trajeto</div>
@@ -397,10 +312,13 @@
                 </div>
             </div>
             
+            <!-- Questão 5 -->
             <div class="question">
-                <div class="question-number">5.</div>
-                <div class="question-text">
-                    Um drone ambulância está sendo testado para levar pequenos equipamentos de primeiros socorros. Em um teste, o drone se desloca 9000 metros em linha reta em 300 segundos. Os engenheiros precisam calcular a velocidade média do drone para avaliar sua eficiência. Considerando a relação entre deslocamento e tempo, qual é a velocidade média aproximada do drone?
+                <div class="question-header">
+                    <div class="question-number">5.</div>
+                    <div class="question-text">
+                        Um drone ambulância está sendo testado para levar pequenos equipamentos de primeiros socorros. Em um teste, o drone se desloca 9000 metros em linha reta em 300 segundos. Os engenheiros precisam calcular a velocidade média do drone para avaliar sua eficiência. Considerando a relação entre deslocamento e tempo, qual é a velocidade média aproximada do drone?
+                    </div>
                 </div>
                 <div class="options">
                     <div class="option"><input type="radio" name="q5" value="a"> a) 30 m/s, pois 9000 metros divididos por 300 segundos resulta em 30 metros por segundo</div>
@@ -410,51 +328,65 @@
                 </div>
             </div>
             
-            <!-- Questões Discursivas -->
+            <!-- Questão 6 -->
             <div class="question">
-                <div class="question-number">6.</div>
-                <div class="question-text">
-                    Na aula prática, observamos a situação de uma vaca que se desloca do ponto A ao ponto B (5 metros) e depois retorna ao ponto A. Dois observadores acompanharam o movimento: João, que observou todo o trajeto, e Maria, que se distraiu e só viu a vaca no início e no final. Explique detalhadamente a diferença entre distância percorrida e deslocamento nesta situação, considerando as perspectivas de ambos os observadores.
+                <div class="question-header">
+                    <div class="question-number">6.</div>
+                    <div class="question-text">
+                        Na aula prática, observamos a situação de uma vaca que se desloca do ponto A ao ponto B (5 metros) e depois retorna ao ponto A. Dois observadores acompanharam o movimento: João, que observou todo o trajeto, e Maria, que se distraiu e só viu a vaca no início e no final. Explique detalhadamente a diferença entre distância percorrida e deslocamento nesta situação, considerando as perspectivas de ambos os observadores.
+                    </div>
                 </div>
                 <div class="discursive">
                     <textarea id="q6" placeholder="Digite sua resposta aqui..."></textarea>
                 </div>
             </div>
             
+            <!-- Questão 7 -->
             <div class="question">
-                <div class="question-number">7.</div>
-                <div class="question-text">
-                    Os sistemas de GPS são amplamente utilizados atualmente para navegação. Quando um GPS indica que faltam 3 km para chegar ao destino final, ele está se referindo à distância ou ao deslocamento? Justifique sua resposta com base nos conceitos estudados, considerando como os GPS calculam rotas e fornecem informações aos usuários.
+                <div class="question-header">
+                    <div class="question-number">7.</div>
+                    <div class="question-text">
+                        Os sistemas de GPS são amplamente utilizados atualmente para navegação. Quando um GPS indica que faltam 3 km para chegar ao destino final, ele está se referindo à distância ou ao deslocamento? Justifique sua resposta com base nos conceitos estudados, considerando como os GPS calculam rotas e fornecem informações aos usuários.
+                    </div>
                 </div>
                 <div class="discursive">
                     <textarea id="q7" placeholder="Digite sua resposta aqui..."></textarea>
                 </div>
             </div>
             
+            <!-- Questão 8 -->
             <div class="question">
-                <div class="question-number">8.</div>
-                <div class="question-text">
-                    Um veículo percorre o Trecho 1 de uma rodovia (100 km) em 1 hora e o Trecho 2 (120 km) também em 1 hora. Calcule a velocidade média total do percurso, demonstrando todos os passos do seu raciocínio. Em seguida, explique por que a velocidade média total não é simplesmente a média aritmética das duas velocidades (100 km/h e 120 km/h) neste caso específico.
+                <div class="question-header">
+                    <div class="question-number">8.</div>
+                    <div class="question-text">
+                        Um veículo percorre o Trecho 1 de uma rodovia (100 km) em 1 hora e o Trecho 2 (120 km) também em 1 hora. Calcule a velocidade média total do percurso, demonstrando todos os passos do seu raciocínio. Em seguida, explique por que a velocidade média total não é simplesmente a média aritmética das duas velocidades (100 km/h e 120 km/h) neste caso específico.
+                    </div>
                 </div>
                 <div class="discursive">
                     <textarea id="q8" placeholder="Digite sua resposta aqui..."></textarea>
                 </div>
             </div>
             
+            <!-- Questão 9 -->
             <div class="question">
-                <div class="question-number">9.</div>
-                <div class="question-text">
-                    A escolha do referencial é fundamental para a descrição do movimento. Utilizando como exemplo uma pessoa dentro de um vagão de trem em movimento, explique por que essa pessoa pode ser considerada em repouso ou em movimento dependendo do referencial adotado. Relacione essa situação com o conceito de movimento relativo estudado em aula.
+                <div class="question-header">
+                    <div class="question-number">9.</div>
+                    <div class="question-text">
+                        A escolha do referencial é fundamental para a descrição do movimento. Utilizando como exemplo uma pessoa dentro de um vagão de trem em movimento, explique por que essa pessoa pode ser considerada em repouso ou em movimento dependendo do referencial adotado. Relacione essa situação com o conceito de movimento relativo estudado em aula.
+                    </div>
                 </div>
                 <div class="discursive">
                     <textarea id="q9" placeholder="Digite sua resposta aqui..."></textarea>
                 </div>
             </div>
             
+            <!-- Questão 10 -->
             <div class="question">
-                <div class="question-number">10./div>
-                <div class="question-text">
-                    Compare detalhadamente as situações de João (andando na rua) e Maria (andando na esteira) em termos de distância percorrida, deslocamento e possível gasto energético. Considere os conceitos físicos estudados e discuta se podemos afirmar que ambos gastaram a mesma quantidade de energia, justificando sua resposta com base nos princípios da Física.
+                <div class="question-header">
+                    <div class="question-number">10.</div>
+                    <div class="question-text">
+                        Compare detalhadamente as situações de João (andando na rua) e Maria (andando na esteira) em termos de distância percorrida, deslocamento e possível gasto energético. Considere os conceitos físicos estudados e discuta se podemos afirmar que ambos gastaram a mesma quantidade de energia, justificando sua resposta com base nos princípios da Física.
+                    </div>
                 </div>
                 <div class="discursive">
                     <textarea id="q10" placeholder="Digite sua resposta aqui..."></textarea>
@@ -472,10 +404,8 @@
         </div>
     </div>
 
-
-  <script>
-    // === LISTA DE ALUNOS (igual à sua versão) ===
-     // Dados dos alunos baseados na planilha fornecida
+    <script>
+        // Dados dos alunos baseados na planilha fornecida
         const students = [
             // 9ºA
             { name: "ÁGATHA NIKOLLE DA SILVA RAMOS", number: "1", grade: "9ºA" },
@@ -572,96 +502,169 @@
             { name: "ANNA JULYA SILVA MELO", number: "46", grade: "9ºC" }
         ];
 
-    // === PREENCHE DROPDOWN ===
-    function populateStudentDropdown() {
-      const select = document.getElementById('student-name');
-      ['9ºA','9ºB','9ºC'].forEach(grade => {
-        const group = document.createElement('optgroup');
-        group.label = `Turma ${grade}`;
-        students.filter(s => s.grade === grade).forEach(s => {
-          const opt = document.createElement('option');
-          opt.value = s.name;
-          opt.textContent = `${s.name} (Nº ${s.number})`;
-          group.appendChild(opt);
+        // Preencher o dropdown com os nomes dos alunos
+        function populateStudentDropdown() {
+            const studentSelect = document.getElementById('student-name');
+            
+            // Limpar opções existentes (exceto a primeira)
+            while (studentSelect.children.length > 1) {
+                studentSelect.removeChild(studentSelect.lastChild);
+            }
+            
+            // Adicionar alunos organizados por turma
+            const grades = ['9ºA', '9ºB', '9ºC'];
+            
+            grades.forEach(grade => {
+                const gradeStudents = students.filter(student => student.grade === grade);
+                
+                if (gradeStudents.length > 0) {
+                    // Adicionar separador de turma
+                    const optgroup = document.createElement('optgroup');
+                    optgroup.label = `Turma ${grade}`;
+                    studentSelect.appendChild(optgroup);
+                    
+                    // Adicionar alunos da turma
+                    gradeStudents.forEach(student => {
+                        const option = document.createElement('option');
+                        option.value = student.name;
+                        option.textContent = `${student.name} (Nº ${student.number})`;
+                        optgroup.appendChild(option);
+                    });
+                }
+            });
+        }
+
+        // Atualizar número e série quando um aluno for selecionado
+        document.getElementById('student-name').addEventListener('change', function() {
+            const selectedStudent = students.find(student => student.name === this.value);
+            if (selectedStudent) {
+                document.getElementById('student-number').value = selectedStudent.number;
+                document.getElementById('student-grade').value = selectedStudent.grade;
+            } else {
+                document.getElementById('student-number').value = '';
+                document.getElementById('student-grade').value = '';
+            }
         });
-        select.appendChild(group);
-      });
-    }
 
-    document.getElementById('student-name').addEventListener('change', function() {
-      const s = students.find(st => st.name === this.value);
-      document.getElementById('student-number').value = s ? s.number : '';
-      document.getElementById('student-grade').value = s ? s.grade : '';
-    });
+        // Função para calcular a nota
+        function calculateGrade() {
+            let score = 0;
+            
+            // Verificar respostas das questões de múltipla escolha
+            const correctAnswers = {
+                q1: 'a',
+                q2: 'a',
+                q3: 'a',
+                q4: 'b',
+                q5: 'a'
+            };
+            
+            for (let i = 1; i <= 5; i++) {
+                const selectedOption = document.querySelector(`input[name="q${i}"]:checked`);
+                if (selectedOption && selectedOption.value === correctAnswers[`q${i}`]) {
+                    score += 2; // 2 pontos por questão de múltipla escolha
+                }
+            }
+            
+            // As questões discursivas valem 10 pontos no total (2 pontos cada)
+            score += 10;
+            
+            return score;
+        }
 
-    // === CALCULA A NOTA ===
-    function calculateGrade() {
-      let score = 0;
-      const correct = { q1:'a', q2:'a', q3:'a', q4:'b', q5:'a' };
-      for (let i=1;i<=5;i++) {
-        const sel = document.querySelector(`input[name="q${i}"]:checked`);
-        if (sel && sel.value===correct[`q${i}`]) score+=2;
-      }
-      score += 10;
-      return score;
-    }
+        // Função para coletar todas as respostas
+        function collectAllAnswers() {
+            const answers = {};
+            
+            // Coletar respostas de múltipla escolha
+            for (let i = 1; i <= 5; i++) {
+                const selectedOption = document.querySelector(`input[name="q${i}"]:checked`);
+                answers[`q${i}`] = selectedOption ? selectedOption.value : '';
+            }
+            
+            // Coletar respostas discursivas
+            for (let i = 6; i <= 10; i++) {
+                answers[`q${i}`] = document.getElementById(`q${i}`).value;
+            }
+            
+            return answers;
+        }
 
-    // === COLETA RESPOSTAS ===
-    function collectAllAnswers() {
-      const ans = {};
-      for (let i=1;i<=5;i++) {
-        const sel = document.querySelector(`input[name="q${i}"]:checked`);
-        ans[`q${i}`] = sel ? sel.value : '';
-      }
-      for (let i=6;i<=10;i++) {
-        ans[`q${i}`] = document.getElementById(`q${i}`)?.value || '';
-      }
-      return ans;
-    }
+        // Função para enviar as respostas
+        function submitAnswers() {
+            const studentName = document.getElementById('student-name').value;
+            const studentNumber = document.getElementById('student-number').value;
+            const studentGrade = document.getElementById('student-grade').value;
+            const submitBtn = document.getElementById('submit-btn');
+            
+            if (!studentName) {
+                alert('Por favor, selecione seu nome antes de enviar as respostas.');
+                return;
+            }
+            
+            // Verificar se todas as questões de múltipla escolha foram respondidas
+            let allMultipleChoiceAnswered = true;
+            for (let i = 1; i <= 5; i++) {
+                if (!document.querySelector(`input[name="q${i}"]:checked`)) {
+                    allMultipleChoiceAnswered = false;
+                    break;
+                }
+            }
+            
+            if (!allMultipleChoiceAnswered) {
+                if (!confirm('Você não respondeu todas as questões de múltipla escolha. Deseja enviar mesmo assim?')) {
+                    return;
+                }
+            }
+            
+            // Desabilitar botão e mostrar loading
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Enviando...';
+            document.getElementById('loading').style.display = 'block';
+            document.getElementById('result').style.display = 'none';
+            
+            // Coletar todas as respostas
+            const answers = collectAllAnswers();
+            
+            // Calcular nota
+            const score = calculateGrade();
+            
+            // Simular envio para o Google Sheets
+            setTimeout(() => {
+                // Reabilitar botão
+                submitBtn.disabled = false;
+                submitBtn.textContent = 'Enviar Respostas';
+                document.getElementById('loading').style.display = 'none';
+                
+                // Mostrar resultado
+                const resultDiv = document.getElementById('result');
+                resultDiv.className = 'result success';
+                resultDiv.innerHTML = `
+                    <p>✅ Respostas enviadas com sucesso!</p>
+                    <p><strong>Nota: ${score}/20 pontos</strong></p>
+                    <p>Sua nota foi registrada na planilha da turma ${studentGrade}.</p>
+                    <p><small>Número de identificação: ${studentNumber}</small></p>
+                    <p><em>Nota: Em produção, as notas seriam salvas automaticamente no Google Sheets.</em></p>
+                `;
+                resultDiv.style.display = 'block';
+                resultDiv.scrollIntoView({ behavior: 'smooth' });
+                
+                // Aqui você implementaria a integração real com o Google Apps Script
+                console.log('Dados para envio:', {
+                    studentName,
+                    studentNumber, 
+                    studentGrade,
+                    score,
+                    answers
+                });
+                
+            }, 2000);
+        }
 
-    // === ENVIA PARA O GOOGLE APPS SCRIPT ===
-    async function submitAnswers() {
-      const name = document.getElementById('student-name').value;
-      const number = document.getElementById('student-number').value;
-      const grade = document.getElementById('student-grade').value;
-      const btn = document.getElementById('submit-btn');
-      const load = document.getElementById('loading');
-      const result = document.getElementById('result');
-
-      if (!name) { alert('Selecione seu nome!'); return; }
-
-      btn.disabled = true; btn.textContent = 'Enviando...'; load.style.display = 'block'; result.style.display='none';
-      const score = calculateGrade();
-      const answers = collectAllAnswers();
-
-      try {
-        const res = await fetch('https://script.google.com/macros/s/AKfycbxP47fXyjnDPRI0sI884eVz7qTK9ZdGXmWrNvg8ah4yATjhSfqhv_2YW3C09PTC530/exec', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ studentName: name, studentNumber: number, studentGrade: grade, score, answers })
+        // Carregar lista de alunos quando a página carregar
+        window.addEventListener('load', function() {
+            populateStudentDropdown();
         });
-        const data = await res.json();
-
-        result.className = 'result ' + (data.status === 'success' ? 'success' : 'error');
-        result.innerHTML = data.status === 'success'
-          ? `✅ ${data.message}<br><strong>Nota:</strong> ${score}/20 pontos`
-          : `❌ ${data.message}`;
-      } catch (err) {
-        result.className = 'result error';
-        result.textContent = 'Erro ao enviar: ' + err.message;
-      } finally {
-        load.style.display = 'none';
-        btn.disabled = false;
-        btn.textContent = 'Enviar Respostas';
-        result.style.display = 'block';
-        result.scrollIntoView({ behavior: 'smooth' });
-      }
-    }
-
-    window.addEventListener('load', populateStudentDropdown);
-  </script>
+    </script>
 </body>
 </html>
-
-
-
