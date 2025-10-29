@@ -9,14 +9,14 @@
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             margin: 0;
             padding: 20px;
-            background-color: #e0e0e0; /* Cinza claro */
+            background-color: #e0e0e0;
             line-height: 1.6;
         }
         
         .container {
             max-width: 900px;
             margin: 0 auto;
-            background-color: #e6f7ff; /* Azul claro */
+            background-color: #e6f7ff;
             padding: 25px;
             border-radius: 12px;
             box-shadow: 0 4px 15px rgba(0,0,0,0.1);
@@ -98,9 +98,9 @@
         }
         
         .question {
-            margin-bottom: 113px; /* Aproximadamente 3cm */
+            margin-bottom: 113px;
             padding-bottom: 20px;
-            border-bottom: 2px solid #b0bec5; /* Borda mais visível */
+            border-bottom: 2px solid #b0bec5;
             position: relative;
         }
         
@@ -132,7 +132,7 @@
             border-radius: 6px;
             border-left: 4px solid #3498db;
             flex: 1;
-            box-shadow: 0 3px 6px rgba(0,0,0,0.1); /* Efeito de relevo */
+            box-shadow: 0 3px 6px rgba(0,0,0,0.1);
             position: relative;
             z-index: 1;
         }
@@ -146,7 +146,7 @@
             padding: 10px;
             border-radius: 6px;
             transition: background-color 0.2s;
-            cursor: pointer; /* Indica que é clicável */
+            cursor: pointer;
             display: flex;
             align-items: flex-start;
         }
@@ -157,11 +157,11 @@
         
         .option input {
             margin-right: 10px;
-            margin-top: 2px; /* Alinhamento vertical */
+            margin-top: 2px;
         }
         
         .option-text {
-            flex: 1; /* Ocupa todo o espaço disponível */
+            flex: 1;
         }
         
         .discursive {
@@ -261,6 +261,17 @@
             color: #721c24;
             border: 1px solid #f5c6cb;
         }
+        
+        .points-info {
+            text-align: center;
+            margin-bottom: 20px;
+            font-weight: bold;
+            color: #2c3e50;
+            background-color: #fff3cd;
+            padding: 10px;
+            border-radius: 6px;
+            border: 1px solid #ffeaa7;
+        }
     </style>
 </head>
 <body>
@@ -283,6 +294,10 @@
                     <input type="text" id="student-grade" readonly>
                 </div>
             </div>
+        </div>
+        
+        <div class="points-info">
+            ATIVIDADE - VALOR: 10 PONTOS (1,0 ponto por questão)
         </div>
         
         <div class="questions-container">
@@ -413,7 +428,7 @@
                     </label>
                     <label class="option">
                         <input type="radio" name="q5" value="b">
-                        <span class="option-text">b) 930 m/s, valor que seria obtido se considerássemos apenas os primeiros 100 metros</span>
+                        <span class="option-text">b) 930 m/s, valor que seria obtido se considerássemos apenas os primeiro 100 metros</span>
                     </label>
                     <label class="option">
                         <input type="radio" name="q5" value="c">
@@ -667,11 +682,11 @@
             }
         }
 
-        // Função para calcular a nota
+        // Função para calcular a nota (agora 10 pontos no total)
         function calculateGrade() {
             let score = 0;
             
-            // Verificar respostas das questões de múltipla escolha
+            // Verificar respostas das questões de múltipla escolha (0,5 ponto cada)
             const correctAnswers = {
                 q1: 'a',
                 q2: 'a',
@@ -683,14 +698,24 @@
             for (let i = 1; i <= 5; i++) {
                 const selectedOption = document.querySelector(`input[name="q${i}"]:checked`);
                 if (selectedOption && selectedOption.value === correctAnswers[`q${i}`]) {
-                    score += 2; // 2 pontos por questão de múltipla escolha
+                    score += 0.5; // 0,5 ponto por questão de múltipla escolha
                 }
             }
             
-            // As questões discursivas valem 10 pontos no total (2 pontos cada)
-            score += 10;
+            // As questões discursivas valem 7,5 pontos no total (1,5 ponto cada)
+            // Verificar se as questões discursivas foram respondidas
+            let discursiveAnswered = 0;
+            for (let i = 6; i <= 10; i++) {
+                const answer = document.getElementById(`q${i}`).value.trim();
+                if (answer.length > 0) {
+                    discursiveAnswered++;
+                }
+            }
             
-            return score;
+            // Atribuir 1,5 ponto por questão discursiva respondida
+            score += (discursiveAnswered * 1.5);
+            
+            return Math.min(score, 10); // Limitar a 10 pontos no máximo
         }
 
         // Função para coletar todas as respostas
@@ -747,7 +772,7 @@
             // Coletar todas as respostas
             const answers = collectAllAnswers();
             
-            // Calcular nota
+            // Calcular nota (agora em escala de 10 pontos)
             const score = calculateGrade();
             
             // Preparar dados para envio
@@ -782,7 +807,7 @@
                     resultDiv.className = 'result success';
                     resultDiv.innerHTML = `
                         <p>✅ Respostas enviadas com sucesso!</p>
-                        <p><strong>Nota: ${score}/20 pontos</strong></p>
+                        <p><strong>Nota: ${score.toFixed(1)}/10,0 pontos</strong></p>
                         <p>Sua nota foi registrada na planilha da turma ${studentGrade}.</p>
                         <p><small>Número de identificação: ${studentNumber}</small></p>
                         <p><em>${result.message || 'Dados salvos com sucesso!'}</em></p>
@@ -820,6 +845,3 @@
     </script>
 </body>
 </html>
-
-
-
