@@ -5,28 +5,47 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Atividade de Ciências - Posição, Distância e Velocidade</title>
     <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #4a6491;
+            --accent-color: #3498db;
+            --success-color: #27ae60;
+            --danger-color: #e74c3c;
+            --light-bg: #e6f7ff;
+            --card-bg: #ffffff;
+            --text-color: #34495e;
+            --border-radius: 12px;
+            --box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             margin: 0;
             padding: 20px;
             background-color: #e0e0e0;
             line-height: 1.6;
+            color: var(--text-color);
         }
         
         .container {
             max-width: 900px;
             margin: 0 auto;
-            background-color: #e6f7ff;
+            background-color: var(--light-bg);
             padding: 25px;
-            border-radius: 12px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
         }
         
         .header {
-            background: linear-gradient(135deg, #2c3e50, #4a6491);
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
             color: white;
             padding: 20px;
-            border-radius: 8px;
+            border-radius: var(--border-radius);
             margin-bottom: 25px;
             text-align: center;
         }
@@ -42,29 +61,26 @@
             display: flex;
             justify-content: space-between;
             gap: 15px;
-            flex-wrap: nowrap;
+            flex-wrap: wrap;
         }
         
         .info-group {
             display: flex;
             flex-direction: column;
+            flex: 1;
+            min-width: 200px;
+            margin-bottom: 10px;
         }
         
         .info-group.name-group {
             flex: 3;
-            min-width: 300px;
+            min-width: 100%;
         }
         
-        .info-group.number-group {
-            flex: 1;
-            min-width: 80px;
-            max-width: 100px;
-        }
-        
+        .info-group.number-group,
         .info-group.grade-group {
             flex: 1;
-            min-width: 80px;
-            max-width: 100px;
+            min-width: 120px;
         }
         
         .info-group label {
@@ -82,13 +98,12 @@
             border-radius: 6px;
             font-size: 14px;
             background-color: white;
-            box-sizing: border-box;
         }
         
         .questions-container {
             background-color: #f8f9fa;
             padding: 25px;
-            border-radius: 8px;
+            border-radius: var(--border-radius);
             box-shadow: 
                 inset 0 2px 5px rgba(0,0,0,0.1),
                 0 4px 10px rgba(0,0,0,0.08);
@@ -98,11 +113,11 @@
         }
         
         .question {
-            margin-bottom: 3cm; /* Aumentado para 3cm conforme solicitado */
+            margin-bottom: 3cm;
             padding: 20px;
             padding-bottom: 20px;
-            border-radius: 8px;
-            background-color: #ffffff;
+            border-radius: var(--border-radius);
+            background-color: var(--card-bg);
             box-shadow: 0 2px 8px rgba(0,0,0,0.1);
             position: relative;
         }
@@ -115,32 +130,43 @@
             display: flex;
             align-items: flex-start;
             margin-bottom: 15px;
+            flex-direction: column;
         }
         
         .question-number {
             font-weight: bold;
-            color: #2c3e50;
+            color: var(--primary-color);
             font-size: 16px;
-            min-width: 30px;
-            margin-right: 10px;
+            margin-bottom: 10px;
         }
         
         .question-text {
             font-weight: bold;
-            color: #34495e;
+            color: var(--text-color);
             font-size: 15px;
             background-color: #e8f4fc;
             padding: 12px 15px;
             border-radius: 6px;
-            border-left: 4px solid #3498db;
+            border-left: 4px solid var(--accent-color);
             flex: 1;
             box-shadow: 0 3px 6px rgba(0,0,0,0.1);
             position: relative;
             z-index: 1;
+            width: 100%;
+        }
+        
+        .question-image, .question-video {
+            max-width: 100%;
+            height: auto;
+            margin: 15px 0;
+            display: block;
+            border-radius: 6px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
         }
         
         .options {
-            margin-left: 40px;
+            margin-left: 0;
+            margin-top: 15px;
         }
         
         .option {
@@ -168,7 +194,7 @@
         
         .discursive {
             margin-top: 15px;
-            margin-left: 40px;
+            margin-left: 0;
         }
         
         .discursive textarea {
@@ -187,19 +213,26 @@
             justify-content: space-between;
             align-items: center;
             margin-top: 25px;
+            flex-wrap: wrap;
+            gap: 10px;
         }
         
-        .submit-btn {
-            background: linear-gradient(to right, #27ae60, #2ecc71);
+        .submit-btn, .clear-btn {
             color: white;
-            padding: 12px 30px;
+            padding: 12px 20px;
             border: none;
             border-radius: 6px;
             cursor: pointer;
             font-size: 16px;
             font-weight: bold;
-            transition: all 0.3s;
+            transition: var(--transition);
             box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            flex: 1;
+            min-width: 150px;
+        }
+        
+        .submit-btn {
+            background: linear-gradient(to right, var(--success-color), #2ecc71);
         }
         
         .submit-btn:hover {
@@ -215,16 +248,7 @@
         }
         
         .clear-btn {
-            background: linear-gradient(to right, #e74c3c, #c0392b);
-            color: white;
-            padding: 12px 30px;
-            border: none;
-            border-radius: 6px;
-            cursor: pointer;
-            font-size: 16px;
-            font-weight: bold;
-            transition: all 0.3s;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            background: linear-gradient(to right, var(--danger-color), #c0392b);
         }
         
         .clear-btn:hover {
@@ -268,11 +292,104 @@
             text-align: center;
             margin-bottom: 20px;
             font-weight: bold;
-            color: #2c3e50;
+            color: var(--primary-color);
             background-color: #fff3cd;
             padding: 10px;
             border-radius: 6px;
             border: 1px solid #ffeaa7;
+        }
+
+        /* Media Queries para responsividade */
+        @media (max-width: 768px) {
+            body {
+                padding: 10px;
+            }
+            
+            .container {
+                padding: 15px;
+            }
+            
+            .header {
+                padding: 15px;
+            }
+            
+            .school-name {
+                font-size: 18px;
+            }
+            
+            .student-info {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .info-group {
+                min-width: 100%;
+            }
+            
+            .info-group.name-group,
+            .info-group.number-group,
+            .info-group.grade-group {
+                flex: 1;
+                min-width: 100%;
+            }
+            
+            .questions-container {
+                padding: 15px;
+            }
+            
+            .question {
+                padding: 15px;
+                margin-bottom: 2cm;
+            }
+            
+            .question-text {
+                font-size: 14px;
+                padding: 10px;
+            }
+            
+            .option {
+                padding: 8px;
+            }
+            
+            .option-text {
+                font-size: 14px;
+            }
+            
+            .buttons-container {
+                flex-direction: column;
+            }
+            
+            .submit-btn, .clear-btn {
+                width: 100%;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .school-name {
+                font-size: 16px;
+            }
+            
+            .question {
+                padding: 10px;
+                margin-bottom: 1.5cm;
+            }
+            
+            .question-text {
+                font-size: 13px;
+            }
+            
+            .option-text {
+                font-size: 13px;
+            }
+            
+            .info-group label {
+                font-size: 13px;
+            }
+            
+            .info-group select, .info-group input {
+                font-size: 13px;
+                padding: 8px;
+            }
         }
     </style>
 </head>
@@ -315,7 +432,7 @@ Um grupo de estudantes, ao pesquisar a história da ciência, deparou-se com dif
 Essa linha de raciocínio, no entanto, possui uma falha que só foi devidamente compreendida e explicada séculos depois. A falha no argumento geocêntrico descrito reside no fato de que:
                     </div>
                 </div>
-                 <center><img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhmMH8SHnM4UqMT7HfJniO3uwXK4k-UckvasQv2Q6u72p7ZxmJc2EFLztOGTkb1CRsY6GMzUSN-XZfvvL_1zTOnHENGGkC7_QZcOoiwzkjEg-8ql0-YQc5UeSHw06x-mhL5dl7EKYGpU5It1JEWea2BnIC0TZQ1wl_yVYG2Wxyv9dn3siv5EHkg9qXp_8ll/s550/Capturar.JPG" class="question-image"></center>
+                <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhmMH8SHnM4UqMT7HfJniO3uwXK4k-UckvasQv2Q6u72p7ZxmJc2EFLztOGTkb1CRsY6GMzUSN-XZfvvL_1zTOnHENGGkC7_QZcOoiwzkjEg-8ql0-YQc5UeSHw06x-mhL5dl7EKYGpU5It1JEWea2BnIC0TZQ1wl_yVYG2Wxyv9dn3siv5EHkg9qXp_8ll/s550/Capturar.JPG" class="question-image">
                 <div class="options">
                     <label class="option">
                         <input type="radio" name="q1" value="a">
@@ -345,10 +462,10 @@ Essa linha de raciocínio, no entanto, possui uma falha que só foi devidamente 
 
 A transição do modelo geocêntrico para o heliocêntrico não foi um evento isolado, mas um processo lento e complexo, marcado pelo aperfeiçoamento de observações e modelos. Ptolomeu, no século II d.C., propôs um sistema de "epiciclos" para explicar o movimento retrógrado aparente de alguns planetas, como Marte, no céu. Séculos depois, Copérnico propôs que o Sol, e não a Terra, estava no centro, mas ainda assumia órbitas circulares. Foi com Johannes Kepler, analisando meticulosamente os dados orbitais de Marte coletados por Tycho Brahe, que se chegou a um modelo que explicava com precisão esses movimentos.
 
-A principal contribuição de Kepler que permitiu explicar definitivamente o movimento retrógado de Marte, superando as limitações dos modelos de Ptolomeu e Copérnico, foi:
+A principal contribuição de Kepler que permitiu explicar definitivamente o movimento retrógrado de Marte, superando as limitações dos modelos de Ptolomeu e Copérnico, foi:
                     </div>
                 </div>
-                  <center><img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgRXWTAU_cyRJxkEJxOX-bK52tvGauUZwS78FwTIJ0R6O2Rm3J_b2p_eX5CbHqtLfVUJ06aXq05-u7GQVdmsV_YxeNeupaLnL72_lYPfWEi0gZ-2qgNhTBH-lBMSz_tqZWWqjXz_5iO-7IEbJll-mC4WR5EyKykO4CbYHKQoBOlWInI0jHq-rmqpvEP5ty1/s550/Capturar.JPG" class="question-image"></center>
+                <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgRXWTAU_cyRJxkEJxOX-bK52tvGauUZwS78FwTIJ0R6O2Rm3J_b2p_eX5CbHqtLfVUJ06aXq05-u7GQVdmsV_YxeNeupaLnL72_lYPfWEi0gZ-2qgNhTBH-lBMSz_tqZWWqjXz_5iO-7IEbJll-mC4WR5EyKykO4CbYHKQoBOlWInI0jHq-rmqpvEP5ty1/s550/Capturar.JPG" class="question-image">
                 <div class="options">
                     <label class="option">
                         <input type="radio" name="q2" value="a">
@@ -381,7 +498,7 @@ A Teoria do Big Bang é o modelo cosmológico predominante para descrever a orig
 Considerando o processo de formação do Sistema Solar, que é uma consequência posterior ao Big Bang, a sequência de eventos que melhor descreve sua origem é:
                     </div>
                 </div>
-                  <center><img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgTD9RbmilTaGKGXf7IfoXW96ZSllJKD4CZSIb5Onht9rCPr3OGFaUk4Z7Ixmt3hg5s31e5qJEO-6F0OHGkh9NO0uZilmeyLU-L9AjRomdjSNhddTr7cjYatEHPLnnvSi3S84rMUoBeBG1Wane78e6gSDYjPXvXJZ1yICu6zfj78SHEgRaBaQiRq-qYNmGP/s550/29652645bfe64e65f453810ea6b48d67.gif" class="question-image"></center>
+                <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgTD9RbmilTaGKGXf7IfoXW96ZSllJKD4CZSIb5Onht9rCPr3OGFaUk4Z7Ixmt3hg5s31e5qJEO-6F0OHGkh9NO0uZilmeyLU-L9AjRomdjSNhddTr7cjYatEHPLnnvSi3S84rMUoBeBG1Wane78e6gSDYjPXvXJZ1yICu6zfj78SHEgRaBaQiRq-qYNmGP/s550/29652645bfe64e65f453810ea6b48d67.gif" class="question-image">
                 <div class="options">
                     <label class="option">
                         <input type="radio" name="q3" value="a">
@@ -414,7 +531,7 @@ Os planetas rochosos ou telúricos (Mercúrio, Vênus, Terra e Marte) compartilh
 A condição que NÃO é um fator determinante para a existência de vida, tal como a conhecemos, na Terra, quando comparada a Vênus e Marte, é:
                     </div>
                 </div>
-                 <center><img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEh0pyATgeeirTs8y0EUFBk4x0SGK14jgkKB_tNr8H55dZY_h4xMuxN5O6rk8oi-8IT6TWbXjRygc8O1eeDn8Sap7OnR4tBjmcqMQ6LZg_lFBwGp9TEL4RKw3qYGx_0u9AiyNLWlFWeveZuM0DePfiSEF7RNFcqNwtBQ2vHwk17rMhqSZtCtl_kIFQDvs6xl/s550/solar-system-13.gif" class="question-image"></center>
+                <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEh0pyATgeeirTs8y0EUFBk4x0SGK14jgkKB_tNr8H55dZY_h4xMuxN5O6rk8oi-8IT6TWbXjRygc8O1eeDn8Sap7OnR4tBjmcqMQ6LZg_lFBwGp9TEL4RKw3qYGx_0u9AiyNLWlFWeveZuM0DePfiSEF7RNFcqNwtBQ2vHwk17rMhqSZtCtl_kIFQDvs6xl/s550/solar-system-13.gif" class="question-image">
                 <div class="options">
                     <label class="option">
                         <input type="radio" name="q4" value="a">
@@ -447,7 +564,7 @@ João, um motorista de aplicativo, utiliza um GPS para calcular o tempo de suas 
 Considerando os conceitos de Cinemática, é correto afirmar sobre a viagem de João:
                     </div>
                 </div>
-                 <center><img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhKeOuKF40FT6TAQoJ_k_74FcKmwGYNIMpAqw1VlTI72v3Xt1j4o9toNhTarBIu86A-Kxih8MvOJLLx19SuqGEJrGOyZZdWJsw-ivfNWeNBJTVeYJmaSFFT2fB5XbSn_jpWkTe_nSvO0WH5klXcoOdxsiZzDc29lJPrv1FnmBbOwxtQG3Ieov0xu3Auwe4c/s550/ChatGPT%20Image%2020%20de%20nov.%20de%202025,%2007_46_53.png" class="question-image"></center>
+                <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhKeOuKF40FT6TAQoJ_k_74FcKmwGYNIMpAqw1VlTI72v3Xt1j4o9toNhTarBIu86A-Kxih8MvOJLLx19SuqGEJrGOyZZdWJsw-ivfNWeNBJTVeYJmaSFFT2fB5XbSn_jpWkTe_nSvO0WH5klXcoOdxsiZzDc29lJPrv1FnmBbOwxtQG3Ieov0xu3Auwe4c/s550/ChatGPT%20Image%2020%20de%20nov.%20de%202025,%2007_46_53.png" class="question-image">
                 <div class="options">
                     <label class="option">
                         <input type="radio" name="q5" value="a">
@@ -480,7 +597,7 @@ Um experimento comum em aulas de Física envolve soltar simultaneamente, da mesm
 A explicação física para o fato de a folha de papel amassada e a bola de metal caírem no mesmo tempo, enquanto a folha aberta não, está relacionada:
                     </div>
                 </div>
-                <center><iframe allowfullscreen="" class="BLOG_video_class" height="450" src="https://www.youtube.com/embed/_Zo9jIzAssA" width="450" youtube-src-id="_Zo9jIzAssA"></iframe></center>
+                <iframe allowfullscreen="" class="question-video" height="450" src="https://www.youtube.com/embed/_Zo9jIzAssA" width="450" youtube-src-id="_Zo9jIzAssA"></iframe>
                 <div class="options">
                     <label class="option">
                         <input type="radio" name="q6" value="a">
@@ -513,7 +630,7 @@ A sonda espacial Perseverance, da NASA, pousou em Marte em 2021 com o objetivo d
 Dentre as características a seguir, assinale aquela que representa uma condição NECESSÁRIA, mas não SUFICIENTE, para a existência de vida como a conhecemos em Marte, com base nas descobertas recentes:
                     </div>
                 </div>
-                <center><img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhkRj9LEznRCLcZc7MpxwSm29tTh_h5u5Q6tZPwn7buM5x23cfdOwJijoMsgAgPwAZiDlZ773mqjy8ZbOM3lBOCvoM43FSJ1CLnxYl_8UFZbIOheIENbX4OyC_a2JDNqA5QUVkhdO1hcA2q93EbMMefIGf-QLA3aYQsJx8XwrY2S_5hOH6RZfzZ9lRLwdpC/s550/27853_1A12127BC411D974-2.webp" class="question-image"></center>
+                <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhkRj9LEznRCLcZc7MpxwSm29tTh_h5u5Q6tZPwn7buM5x23cfdOwJijoMsgAgPwAZiDlZ773mqjy8ZbOM3lBOCvoM43FSJ1CLnxYl_8UFZbIOheIENbX4OyC_a2JDNqA5QUVkhdO1hcA2q93EbMMefIGf-QLA3aYQsJx8XwrY2S_5hOH6RZfzZ9lRLwdpC/s550/27853_1A12127BC411D974-2.webp" class="question-image">
                 <div class="options">
                     <label class="option">
                         <input type="radio" name="q7" value="a">
@@ -546,7 +663,7 @@ Maria, uma engenheira de tráfego, analisa o movimento de veículos em um trecho
 Considerando que o movimento é retilíneo uniformemente variado (MRUV), a aceleração escalar do carro e sua posição (em km) após 1 minuto do início do movimento são, respectivamente:
                     </div>
                 </div>
-                 <center><img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgaIrPzUXfUvdhlpabwWb9fQ6D_0jAizEryXnCQvu-MnRZs1kNC4Kx5A4MlUUAuG-_CYpaQD5v5UAYeT7dpjGoCPGG4ArHakF9LX7nJbQBLECs1lkrHKoDExhDlw_Yp7DQNifzW-W8xoOPElQvEKI7TNk0S7ed4a07vY24VzV1MtygUO2AbH3gdegW8TWu2/s550/ChatGPT%20Image%2020%20de%20nov.%20de%202025,%2008_56_59.png"></center>
+                <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgaIrPzUXfUvdhlpabwWb9fQ6D_0jAizEryXnCQvu-MnRZs1kNC4Kx5A4MlUUAuG-_CYpaQD5v5UAYeT7dpjGoCPGG4ArHakF9LX7nJbQBLECs1lkrHKoDExhDlw_Yp7DQNifzW-W8xoOPElQvEKI7TNk0S7ed4a07vY24VzV1MtygUO2AbH3gdegW8TWu2/s550/ChatGPT%20Image%2020%20de%20nov.%20de%202025,%2008_56_59.png" class="question-image">
                 <div class="options">
                     <label class="option">
                         <input type="radio" name="q8" value="a">
@@ -574,7 +691,7 @@ Considerando que o movimento é retilíneo uniformemente variado (MRUV), a acele
                     <div class="question-text">
                         Habilidade BNCC: (EF09CI14) Descrever a composição e a estrutura do Sistema Solar.<br><br>
                         A tabela abaixo apresenta dados comparativos entre os planetas rochosos do Sistema Solar:<br><br>
-                         <center><img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEi_wIVVtAzAn30blPsKK3UYNy6_giRPpA54ta6fgxUxQxw2sQ2EfipVP54xdCKVt2qa35oFmHPhBnXPNmzTQlsnlGV_6nqbrMYFrJkswkGoA45j4ka0K5MG1s-1L_6BWbkJ76af1ki-4ue8NxmFANGIltOs4-yvB7WNDLg8NoJr-8KqSLwoPUMGrSV_LIht/s750/Capturar.JPG"></center>
+                        <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEi_wIVVtAzAn30blPsKK3UYNy6_giRPpA54ta6fgxUxQxw2sQ2EfipVP54xdCKVt2qa35oFmHPhBnXPNmzTQlsnlGV_6nqbrMYFrJkswkGoA45j4ka0K5MG1s-1L_6BWbkJ76af1ki-4ue8NxmFANGIltOs4-yvB7WNDLg8NoJr-8KqSLwoPUMGrSV_LIht/s750/Capturar.JPG" class="question-image">
                         <br>Analisando os dados da tabela, qual conclusão está CORRETA sobre os planetas rochosos?
                     </div>
                 </div>
@@ -951,65 +1068,3 @@ De acordo com as Leis de Newton, é correto afirmar que:
     </script>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
